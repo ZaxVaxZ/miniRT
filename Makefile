@@ -1,8 +1,9 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iinc
 NAME = miniRT
-
-SRCS = $(addprefix $(SRCDIR), $(CFILES)) $(GNL) $(LIBFT)
+SRCDIR = ./src
+CFILES = main.c
+SRCS = $(addprefix $(SRCDIR), $(CFILES))# $(GNL) $(LIBFT)
 OBJS = $(SRCS:.c=.o)
 OS := $(shell uname)
 ifeq ($(OS),Linux)
