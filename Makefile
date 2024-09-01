@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Iinc #-Wall -Wextra -Werror
+CFLAGS = -Iinc -Wall -Wextra -Werror
 NAME = miniRT
 LIBFT_DIR = ./lib/Libft/
 LIBFT_SRC = ft_strlen.c ft_atoi.c
@@ -28,20 +28,24 @@ endif
 all: $(NAME)
 
 $(NAME): $(MLX) $(OBJS)
-	$(CC) $(OBJS) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(OBJS) $(MLX_FLAGS) -o $(NAME)
+	@echo "Program Compilation Complete!"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(MLX):
-	make -C $(MLX_DIR)
+	@make -s -C $(MLX_DIR)
+	@echo "MLX Compilation Complete!"
 
 clean:
-	make clean -C $(MLX_DIR)
-	rm -rf $(OBJS)
+	@make clean -s -C $(MLX_DIR)
+	@rm -rf $(OBJS)
+	@echo "Cleaning Complete!"
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
+	@echo "FCleaning Complete!"
 
 re: fclean all
 

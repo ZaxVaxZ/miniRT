@@ -26,8 +26,17 @@ void	color_pixel(t_main m, int x, int y, int color)
 
 void	free_and_exit(t_main *m, int msg, int status)
 {
-	// if (msg == SUCCESS)
-	// 	write(1, "Program Complete!\n", )
+	int	ret;
+
+	ret = 0;
+	if (msg == SUCCESS)
+		ret = ft_printf("Execution Complete!\n");
+	if (msg == FAILURE)
+		ret = write(2, "Unexpected Error!\n", 18);
+	if (msg == ERR_MEM)
+		ret = write(2, "Memory allocation failure!\n", 27);
+	if (ret < 0)
+		status = FAILURE;
 	if (m->img && m->mlx)
 		mlx_destroy_image(m->mlx, m->img);
 	if (m->mw && m->mlx)
