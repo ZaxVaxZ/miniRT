@@ -1,7 +1,7 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinc
+CFLAGS = -Iinc #-Wall -Wextra -Werror
 NAME = miniRT
-SRCDIR = ./src
+SRCDIR = ./src/
 CFILES = main.c
 SRCS = $(addprefix $(SRCDIR), $(CFILES))# $(GNL) $(LIBFT)
 OBJS = $(SRCS:.c=.o)
