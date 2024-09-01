@@ -1,10 +1,5 @@
 #include "main.h"
 
-#define HEIGHT 512
-#define WIDTH  1024
-
-
-
 void	color_pixel()
 {
 	if (pixel_bits != 32)
