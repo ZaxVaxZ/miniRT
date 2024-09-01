@@ -1,9 +1,16 @@
 CC = cc
 CFLAGS = -Iinc #-Wall -Wextra -Werror
 NAME = miniRT
-SRCDIR = ./src/
+LIBFT_DIR = ./lib/Libft/
+LIBFT_SRC = ft_strlen.c ft_atoi.c
+SRCS += $(addprefix $(LIBFT_DIR), $(LIBFT_SRC))
+PRNTF_DIR = ./lib/Printf/
+PRNTF_SRC = ft_extra_utils.c ft_printaddr.c ft_printhex.c ft_printuint.c ft_handlestr.c\
+			ft_printchar.c ft_printint.c ft_mods_utils.c ft_printf.c ft_printstr.c
+SRCS += $(addprefix $(PRNTF_DIR), $(PRNTF_SRC))
+SRC_DIR = ./src/
 CFILES = main.c
-SRCS = $(addprefix $(SRCDIR), $(CFILES))# $(GNL) $(LIBFT)
+SRCS += $(addprefix $(SRC_DIR), $(CFILES))
 OBJS = $(SRCS:.c=.o)
 OS := $(shell uname)
 ifeq ($(OS),Linux)
