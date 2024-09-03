@@ -17,7 +17,7 @@ float	dot(t_vector v1, t_vector v2)
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-void	cross(t_vector *result, t_vector v1, t_vector v2)
+void	cross_vector(t_vector *result, t_vector v1, t_vector v2)
 {
 	result->x = v1.y * v2.z - v1.z * v2.y;
 	result->y = v1.z * v2.x - v1.x * v2.z;
@@ -27,4 +27,13 @@ void	cross(t_vector *result, t_vector v1, t_vector v2)
 float	magnitude(t_vector v)
 {
 	return (sqrt(dot(v, v)));
+}
+
+void	copy_vector(t_vector *dest, const t_vector *src)
+{
+	if (!dest || !src)
+		return ;
+	dest->x = src->x;
+	dest->y = src->y;
+	dest->z = src->z;
 }
