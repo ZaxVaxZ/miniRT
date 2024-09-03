@@ -13,6 +13,9 @@
 #ifndef FT_MATH_H
 # define FT_MATH_H
 
+# include "vectors.h"
+# include "matrix.h"
+
 
 
 #endif
