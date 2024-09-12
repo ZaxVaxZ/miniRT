@@ -6,7 +6,7 @@
 /*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:10:51 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/10 16:10:52 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/12 11:17:58 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define HEIGHT 512
 # define WIDTH 1024
-# define ESC 65307
+# define ESC 53
 # define SUCCESS 0
 # define FAILURE 1
 # define ERR_MEM 2

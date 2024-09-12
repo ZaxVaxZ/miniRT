@@ -12,11 +12,11 @@ PRNTF_SRC = ft_extra_utils.c ft_printaddr.c ft_printhex.c ft_printuint.c ft_hand
 SRCS += $(addprefix $(PRNTF_DIR), $(PRNTF_SRC))
 
 MATH_DIR = ./lib/Math/
-MATH_SRC = matrix.c ray.c vector.c
+MATH_SRC = matrix.c vector.c
 SRCS += $(addprefix $(MATH_DIR), $(MATH_SRC))
 
 SRC_DIR = ./src/
-CFILES = miniRT.c
+CFILES = miniRT.c object.c
 SRCS += $(addprefix $(SRC_DIR), $(CFILES))
 
 OBJS = $(SRCS:.c=.o)

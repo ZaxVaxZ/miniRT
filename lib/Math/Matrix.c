@@ -37,6 +37,7 @@ t_matrix_2d	*cross_matrix(const t_matrix_2d *m1, const t_matrix_2d *m2)
 		ri += (rj == result->cols);
 		rj *= (rj == result->cols);
 	}
+	return (result);
 }
 
 void	free_matrix(t_matrix_2d *m)
@@ -91,7 +92,7 @@ int	copy_matrix(t_matrix_2d *dest, const t_matrix_2d *src)
 	int	ret;
 
 	if (!dest || !src || !src->array)
-		return ;
+		return (1);
 	ret = create_matrix(dest, src->rows, src->cols);
 	if (ret < 1)
 		return (ret);
@@ -103,4 +104,5 @@ int	copy_matrix(t_matrix_2d *dest, const t_matrix_2d *src)
 			dest->array[i][j] = src->array[i][j];
 		i++;
 	}
+	return (1);
 }

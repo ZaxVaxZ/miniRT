@@ -33,9 +33,19 @@ typedef struct s_object
 	t_object_type	type;
 }	t_object;
 
-t_object	*cross_matrix(const t_object *m1, const t_object *m2);
-void		free_matrix(t_object *m);
-int			create_matrix(t_object *m, int rows, int cols);
-int			copy_matrix(t_object *dest, const t_object *src);
+typedef struct s_camera
+{
+	float		focal_length;
+	float		fov;
+	t_vector	origin;
+	t_vector	direct;
+	t_matrix_2d	world;
+}	t_camera;
+
+typedef struct s_ray
+{
+	t_vector	origin;
+	t_vector	direct;
+}	t_ray;
 
 #endif
