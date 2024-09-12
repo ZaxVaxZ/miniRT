@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_math.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 15:52:14 by marvin            #+#    #+#             */
-/*   Updated: 2024/09/03 15:52:14 by marvin           ###   ########.fr       */
+/*   Created: 2024/09/10 16:10:58 by ehammoud          #+#    #+#             */
+/*   Updated: 2024/09/10 16:10:58 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MATH_H
 # define FT_MATH_H
 
-# include "vectors.h"
+# include "vector.h"
 # include "matrix.h"
+# include "ray.h"
 
 
 
