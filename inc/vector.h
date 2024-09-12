@@ -13,15 +13,8 @@
 #ifndef VECTORS_H
 # define VECTORS_H
 
-#include <math.h>
-
-typedef struct s_vector
-{
-	float	x;
-	float	y;
-	float	z;
-	float	a;
-}	t_vector;
+# include <math.h>
+# include "general.h"
 
 float	dot(t_vector v1, t_vector v2);
 float	magnitude(t_vector v);

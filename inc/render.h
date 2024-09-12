@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/10 16:10:51 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/12 11:41:37 by ehammoud         ###   ########.fr       */
+/*   Created: 2024/09/12 11:29:33 by ehammoud          #+#    #+#             */
+/*   Updated: 2024/09/12 11:41:01 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
 
-# include "mlx.h"
+#ifndef RENDER_H
+# define RENDER_H
+
 # include "general.h"
-# include "render.h"
+# include "mlx.h"
 
-int		keypress_hook(int keypress, t_main *m);
-int		exitbutton_hook(t_main *m);
-int		redraw(t_main *m);
+void	color_pixel(t_main m, int x, int y, int color);
+void	draw_rainbow(t_main m);
 
 #endif

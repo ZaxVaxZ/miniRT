@@ -14,13 +14,7 @@
 # define MATRIX_H
 
 # include <stdlib.h>
-
-typedef struct s_matrix_2d
-{
-	int		rows;
-	int		cols;
-	float	**array;
-}	t_matrix_2d;
+# include "general.h"
 
 t_matrix_2d	*cross_matrix(const t_matrix_2d *m1, const t_matrix_2d *m2);
 void		free_matrix(t_matrix_2d *m);
