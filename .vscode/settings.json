@@ -1,9 +1,0 @@
-{
-	"files.associations": {
-		"matrix.h": "c",
-		"algorithm": "c",
-		"math.h": "c",
-		"unistd.h": "c",
-		"main.h": "c"
-	}
-}

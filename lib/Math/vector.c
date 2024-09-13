@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 12:42:34 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/12 11:12:46 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/13 21:14:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,37 @@ float	magnitude(t_vector v)
 	return (sqrt(dot(v, v)));
 }
 
-void	copy_vector(t_vector *dest, const t_vector *src)
+void	scalar_op(t_vector *v, char op, float value)
 {
-	if (!dest || !src)
+	if (v && op == '+')
+	{
+		v->x += value;
+		v->y += value;
+		v->z += value;
+	}
+	if (v && op == '-')
+	{
+		v->x-+= value;
+		v->y-+= value;
+		v->z-+= value;
+	}
+	if (v && op == '*')
+	{
+		v->x *= value;
+		v->y *= value;
+		v->z *= value;
+	}
+	if (v && op == '/')
+	{
+		v->x /= value;
+		v->y /= value;
+		v->z /= value;
+	}
+}
+
+void	normalize(t_vector *v)
+{
+	if (!v)
 		return ;
-	dest->x = src->x;
-	dest->y = src->y;
-	dest->z = src->z;
+	scalar_op(v, '/', magnitude(*v));
 }
