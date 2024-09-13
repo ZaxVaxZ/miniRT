@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 12:42:34 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/13 21:14:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/13 21:15:25 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	scalar_op(t_vector *v, char op, float value)
 	}
 	if (v && op == '-')
 	{
-		v->x-+= value;
-		v->y-+= value;
-		v->z-+= value;
+		v->x -= value;
+		v->y -= value;
+		v->z -= value;
 	}
 	if (v && op == '*')
 	{
