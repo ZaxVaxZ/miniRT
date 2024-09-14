@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffidha <ffidha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/12 11:43:16 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:38:57 by ffidha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
 # include "mlx.h"
 
 # define HEIGHT 512
@@ -80,6 +82,7 @@ typedef struct s_ray
 	t_vector	origin;
 	t_vector	direct;
 }	t_ray;
+
 
 void	free_and_exit(t_main *m, int msg, int status);
 
