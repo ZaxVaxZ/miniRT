@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffidha <ffidha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/14 11:38:57 by ffidha           ###   ########.fr       */
+/*   Updated: 2024/09/14 18:18:54 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-#include <fcntl.h>
-#include <stdio.h>
+# include <fcntl.h>
+# include <stdio.h>
 # include "mlx.h"
 
-# define HEIGHT 512
-# define WIDTH 1024
 # define ESC 53
-# define SUCCESS 0
-# define FAILURE 1
-# define ERR_MEM 2
+# define WIN_HEIGHT 512
+# define ASPECT_RATIO 1.778
 
 typedef struct	s_main
 {
 	void	*mlx;
 	void	*mw;
 	void	*img;
-	char	*pixel;
+	int		win_width;
+	int		win_height;
 	int		pixel_bits;
 	int		line_bytes;
 	int		endian;
+	char	*pixel;
+	t_scene	scene;
 }	t_main;
 
 typedef struct s_vector
@@ -42,8 +42,10 @@ typedef struct s_vector
 	float	x;
 	float	y;
 	float	z;
-	float	a;
 }	t_vector;
+
+typedef struct s_vector	t_point;
+typedef struct s_vector	t_color;
 
 typedef struct s_matrix_2d
 {
@@ -54,36 +56,55 @@ typedef struct s_matrix_2d
 
 typedef enum e_object_type
 {
+	Cone,
 	Plane,
 	Sphere,
-	Cone
+	Cylinder
 }	t_object_type;
 
 typedef struct s_object
 {
 	float			radius;
 	float			height;
-	t_vector		origin;
-	t_matrix_2d		trans;
+	t_point			origin;
+	t_color			color;
+	t_matrix_2d		trans_matrix;
 	t_object_type	type;
 }	t_object;
 
+typedef struct s_light
+{
+	int				is_ambient;
+	float			brightness;
+	t_point			origin;
+	t_color			color;
+}	t_light;
+
 typedef struct s_camera
 {
-	float		focal_length;
 	float		fov;
-	t_vector	origin;
+	t_point		origin;
 	t_vector	direct;
-	t_matrix_2d	world;
+	t_matrix_2d	trans_matrix;
 }	t_camera;
 
 typedef struct s_ray
 {
-	t_vector	origin;
+	t_point		origin;
 	t_vector	direct;
 }	t_ray;
 
+typedef struct s_scene
+{
+	t_object	*cylinders;
+	t_object	*spheres;
+	t_object	*planes;
+	t_object	*cones;
+	t_camera	camera;
+	t_light		ambient_light;
+	t_light		light_source;
+}	t_scene;
 
-void	free_and_exit(t_main *m, int msg, int status);
+void	free_and_exit(t_main *m, char *msg, int status);
 
 #endif

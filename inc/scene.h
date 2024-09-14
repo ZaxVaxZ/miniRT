@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffidha <ffidha@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/14 11:28:51 by ffidha            #+#    #+#             */
-/*   Updated: 2024/09/14 11:35:18 by ffidha           ###   ########.fr       */
+/*   Created: 2024/09/10 16:10:42 by ehammoud          #+#    #+#             */
+/*   Updated: 2024/09/14 18:18:02 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/general.h"
+#ifndef SCENE_H
+# define SCENE_H
 
-void	panic(char *reason)
-{
-	ft_putstr_fd(RED, 2);
-	ft_putendl_fd(reason, 2);
-	exit(EXIT_FAILURE);
-}
+# include "general.h"
+
+void	init_scene(t_scene *s);
+void	setup_scene(t_scene *s, double **objs);
+
+#endif
