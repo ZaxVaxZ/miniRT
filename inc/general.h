@@ -6,7 +6,7 @@
 /*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/14 18:18:54 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/14 21:22:20 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 # define ESC 53
 # define WIN_HEIGHT 512
 # define ASPECT_RATIO 1.778
+# define CONE 0
+# define PLANE 1
+# define SPHERE 2
+# define CYLINDER 3
+# define AMBIENT 4
+# define CAMERA 5
+# define LIGHT 6
+# define INVALID 7
 
 typedef struct	s_main
 {
@@ -54,22 +62,14 @@ typedef struct s_matrix_2d
 	float	**array;
 }	t_matrix_2d;
 
-typedef enum e_object_type
-{
-	Cone,
-	Plane,
-	Sphere,
-	Cylinder
-}	t_object_type;
-
 typedef struct s_object
 {
-	float			radius;
-	float			height;
-	t_point			origin;
-	t_color			color;
-	t_matrix_2d		trans_matrix;
-	t_object_type	type;
+	int			object_type;
+	float		radius;
+	float		height;
+	t_point		origin;
+	t_color		color;
+	t_matrix_2d	trans_matrix;
 }	t_object;
 
 typedef struct s_light

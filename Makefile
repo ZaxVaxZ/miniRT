@@ -6,10 +6,9 @@ LIBFT_DIR = ./lib/Libft/
 LIBFT_SRC = ft_strlen.c ft_atoi.c
 SRCS += $(addprefix $(LIBFT_DIR), $(LIBFT_SRC))
 
-PRNTF_DIR = ./lib/Printf/
-PRNTF_SRC = ft_extra_utils.c ft_printaddr.c ft_printhex.c ft_printuint.c ft_handlestr.c\
-			ft_printchar.c ft_printint.c ft_mods_utils.c ft_printf.c ft_printstr.c
-SRCS += $(addprefix $(PRNTF_DIR), $(PRNTF_SRC))
+GNL_DIR = ./lib/GetNextLine/
+GNL_SRC = get_next_line.c get_next_line_utils.c
+SRCS += $(addprefix $(GNL_DIR), $(GNL_SRC))
 
 MATH_DIR = ./lib/Math/
 MATH_SRC = matrix.c vector.c
