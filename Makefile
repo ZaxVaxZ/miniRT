@@ -15,7 +15,7 @@ MATH_SRC = matrix.c vector.c
 SRCS += $(addprefix $(MATH_DIR), $(MATH_SRC))
 
 SRC_DIR = ./src/
-CFILES = miniRT.c object.c render.c hooks.c free.c parser.c
+CFILES = miniRT.c object.c render.c hooks.c free.c parser.c scene.c read_values.c
 SRCS += $(addprefix $(SRC_DIR), $(CFILES))
 
 OBJS = $(SRCS:.c=.o)

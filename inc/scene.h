@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:10:42 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/14 18:18:02 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:24:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 # define SCENE_H
 
 # include "general.h"
+# include "matrix.h"
 
 void	init_scene(t_scene *s);
 void	setup_scene(t_scene *s, double **objs);
+void	read_camera_values(t_camera *c, double *vals);
+void	read_light_values(t_light *c, double *vals):
+void	read_shape_values(t_object *o, double *vals);
 
 #endif

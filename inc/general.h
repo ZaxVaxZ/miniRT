@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/14 21:22:20 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:10:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <stdio.h>
 # include "mlx.h"
 
-# define ESC 53
-# define WIN_HEIGHT 512
 # define ASPECT_RATIO 1.778
+# define WIN_HEIGHT 512
+# define ESC 53
 # define CONE 0
 # define PLANE 1
 # define SPHERE 2
@@ -29,7 +29,7 @@
 # define AMBIENT 4
 # define CAMERA 5
 # define LIGHT 6
-# define INVALID 7
+# define INVALID -1
 
 typedef struct	s_main
 {
@@ -69,38 +69,43 @@ typedef struct s_object
 	float		height;
 	t_point		origin;
 	t_color		color;
+	t_vector	orient;
 	t_matrix_2d	trans_matrix;
 }	t_object;
 
 typedef struct s_light
 {
-	int				is_ambient;
-	float			brightness;
-	t_point			origin;
-	t_color			color;
+	int		is_ambient;
+	float	brightness;
+	t_point	origin;
+	t_color	color;
 }	t_light;
 
 typedef struct s_camera
 {
 	float		fov;
 	t_point		origin;
-	t_vector	direct;
+	t_vector	orient;
 	t_matrix_2d	trans_matrix;
 }	t_camera;
 
 typedef struct s_ray
 {
 	t_point		origin;
-	t_vector	direct;
+	t_vector	orient;
 }	t_ray;
 
 typedef struct s_scene
 {
-	t_object	*cylinders;
-	t_object	*spheres;
-	t_object	*planes;
-	t_object	*cones;
+	int			cy_cnt;
+	int			sp_cnt;
+	int			pl_cnt;
+	int			co_cnt;
 	t_camera	camera;
+	t_object	*cones;
+	t_object	*planes;
+	t_object	*spheres;
+	t_object	*cylinders;
 	t_light		ambient_light;
 	t_light		light_source;
 }	t_scene;

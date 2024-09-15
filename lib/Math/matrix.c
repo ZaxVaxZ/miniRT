@@ -63,7 +63,7 @@ int	create_matrix(t_matrix_2d *m, int rows, int cols)
 	int	j;
 
 	if (!m || rows <= 0 || cols <= 0)
-		return (0);
+		return (1);
 	m->array = malloc((rows + 1) * sizeof(int *));
 	if (!m->array)
 		return (-1);
@@ -82,7 +82,7 @@ int	create_matrix(t_matrix_2d *m, int rows, int cols)
 		i++;
 	}
 	m->array[i] = NULL;
-	return (1);
+	return (0);
 }
 
 int	copy_matrix(t_matrix_2d *dest, const t_matrix_2d *src)
@@ -94,7 +94,7 @@ int	copy_matrix(t_matrix_2d *dest, const t_matrix_2d *src)
 	if (!dest || !src || !src->array)
 		return (1);
 	ret = create_matrix(dest, src->rows, src->cols);
-	if (ret < 1)
+	if (ret)
 		return (ret);
 	i = 0;
 	while (i < src->rows)
@@ -104,5 +104,5 @@ int	copy_matrix(t_matrix_2d *dest, const t_matrix_2d *src)
 			dest->array[i][j] = src->array[i][j];
 		i++;
 	}
-	return (1);
+	return (0);
 }

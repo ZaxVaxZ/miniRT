@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/14 21:21:32 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:24:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,39 +48,57 @@ static void	count_shapes(int count[4], double **objs)
 	}
 }
 
+static void	create_shapes_arr(void **arr_pointer, int cnt, int shape)
+{
+	int	i;
+
+	if (cnt <= 0)
+		return ;
+	if (!ft_malloc(arr_pointer, cnt + 1, sizeof(t_object)))
+		free_and_exit(m, "Memory allocation failed", EXIT_FAILURE);
+	i = -1;
+	while (++i < cnt)
+		arr_pointer[i].object_type = shape;
+}
+
 static void	setup_shapes(t_main *m, int cnt[4])
 {
+	int	i;
+
 	if (!m)
 		return ;
-	if (cnt[CONE])
-	{
-		if (!ft_malloc((void **)&m->scene.cones, cnt[CONE] + 1, sizeof(t_object)))
-			free_and_exit(m, "Memory allocation failed", 1);
-	}
-	if (cnt[PLANE])
-	{
-		if (!ft_malloc((void **)&m->scene.planes, cnt[PLANE] + 1, sizeof(t_object)))
-			free_and_exit(m, "Memory allocation failed", 1);
-	}
-	if (cnt[SPHERE])
-	{
-		if (!ft_malloc((void **)&m->scene.spheres,
-			cnt[SPHERE] + 1, sizeof(t_object)))
-			free_and_exit(m, "Memory allocation failed", 1);
-	}
-	if (cnt[CYLINDER])
-	{
-		if (!ft_malloc((void **)&m->scene.cylinders,
-			cnt[CYLINDER] + 1, sizeof(t_object)))
-			free_and_exit(m, "Memory allocation failed", 1);
-	}
+	m->scene.co_cnt = 0;
+	m->scene.pl_cnt = 0;
+	m->scene.sp_cnt = 0;
+	m->scene.cy_cnt = 0;
+	create_shapes_arr((void **)&m->scene.cones, cnt[CONE], CONE);
+	create_shapes_arr((void **)&m->scene.planes, cnt[PLANE], PLANE);
+	create_shapes_arr((void **)&m->scene.spheres, cnt[SPHERE], SPHERE);
+	create_shapes_arr((void **)&m->scene.cylinders, cnt[CYLINDER], CYLINDER);
 }
 
 void	setup_scene(t_main *m, double **objs)
 {
 	int	i;
-	int	shape_cnt[4];
 
 	count_shapes(shape_cnt, objs);
-	
+	setup_shapes(m, shape_cnt);
+	i = -1;
+	while (objs[++i][0] != INVALID)
+	{
+		if (objs[0] == CONE)
+			read_shape_values(m, &m->scene.cones[m->scene.co_cnt++], objs[i]);
+		if (objs[0] == PLANE)
+			read_shape_values(m, &m->scene.planes[m->scene.pl_cnt++], objs[i]);
+		if (objs[0] == SPHERE)
+			read_shape_values(m, &m->scene.spheres[m->scene.sp_cnt++], objs[i]);
+		if (objs[0] == CYLINDER)
+			read_shape_values(m, &m->scene.cylinders[m->scene.cy_cnt++], objs[i]);
+		if (objs[0] == AMBIENT)
+			read_light_values(m, &m->scene.ambient, objs[i]);
+		if (objs[0] == LIGHT)
+			read_light_values(m, &m->scene.light, objs[i]);
+		if (objs[0] == CAMERA)
+			read_camera_values(m, &m->scene.camera, objs[i]);
+	}
 }
