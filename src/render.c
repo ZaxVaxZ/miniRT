@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:28:33 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/12 11:28:43 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/15 20:11:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	draw_rainbow(t_main m)
 {
 	int	a, b, c, color;
 
-	for(int y = 0; y < HEIGHT; ++y)
+	for(int y = 0; y < m.win_height; ++y)
 	{
 		a = 0;
 		b = 0;
 		c = 255;
-		for(int x = 0; x < WIDTH; ++x)
+		for(int x = 0; x < m.win_width; ++x)
 		{
 			a += (!c && b > 0) - (!b && a > 0);
 			b += (!a && c > 0) - (!c && b > 0);

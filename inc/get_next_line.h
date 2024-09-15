@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 20:16:43 by ehammoud          #+#    #+#             */
-/*   Updated: 2023/12/08 14:38:56 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/15 20:40:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <limits.h>
+# include "libft.h"
 
 char	*get_next_line(int fd);
 char	*ft_add_next(char *line, char *buffer);

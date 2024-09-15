@@ -17,33 +17,33 @@ void	read_camera_values(t_camera *c, double *vals)
 	int	i;
 
 	i = 1;
-	o->origin.x = vals[i++];
-	o->origin.y = vals[i++];
-	o->origin.z = vals[i++];
-	o->orient.x = vals[i++];
-	o->orient.y = vals[i++];
-	o->orient.z = vals[i++];
-	o->fov = vals[i++];
+	c->origin.x = vals[i++];
+	c->origin.y = vals[i++];
+	c->origin.z = vals[i++];
+	c->orient.x = vals[i++];
+	c->orient.y = vals[i++];
+	c->orient.z = vals[i++];
+	c->fov = vals[i++];
 }
 
-void	read_light_values(t_light *c, double *vals)
+void	read_light_values(t_light *li, double *vals)
 {
 	int	i;
 
 	i = 0;
-	o->is_ambient = (vals[i++] == AMBIENT);
-	o->origin.x = vals[i++];
-	o->origin.y = vals[i++];
-	o->origin.z = vals[i++];
+	li->is_ambient = (vals[i++] == AMBIENT);
+	li->origin.x = vals[i++];
+	li->origin.y = vals[i++];
+	li->origin.z = vals[i++];
 	i += 3;
-	o->brightness = vals[i++];
+	li->brightness = vals[i++];
 	i++;
-	o->color.x = vals[i++];
-	o->color.y = vals[i++];
-	o->color.z = vals[i++];
+	li->color.x = vals[i++];
+	li->color.y = vals[i++];
+	li->color.z = vals[i++];
 }
 
-void	read_shape_values(t_object *o, double *vals)
+void	read_shape_values(t_main *m, t_object *o, double *vals)
 {
 	int	i;
 
@@ -61,9 +61,9 @@ void	read_shape_values(t_object *o, double *vals)
 	o->color.y = vals[i++];
 	o->color.z = vals[i++];
 	if (create_matrix(&o->trans_matrix, 4, 4))
-		free_and_exit()
-	o->trans_matrix[0][0] = 1;
-	o->trans_matrix[1][1] = 1;
-	o->trans_matrix[2][2] = 1;
-	o->trans_matrix[3][3] = 1;
+		free_and_exit(m, "Memory allocation failed", EXIT_FAILURE);
+	o->trans_matrix.array[0][0] = 1;
+	o->trans_matrix.array[1][1] = 1;
+	o->trans_matrix.array[2][2] = 1;
+	o->trans_matrix.array[3][3] = 1;
 }

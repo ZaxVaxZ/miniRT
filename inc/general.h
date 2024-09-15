@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/15 16:10:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/15 20:29:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@
 # define CAMERA 5
 # define LIGHT 6
 # define INVALID -1
-
-typedef struct	s_main
-{
-	void	*mlx;
-	void	*mw;
-	void	*img;
-	int		win_width;
-	int		win_height;
-	int		pixel_bits;
-	int		line_bytes;
-	int		endian;
-	char	*pixel;
-	t_scene	scene;
-}	t_main;
 
 typedef struct s_vector
 {
@@ -106,10 +92,25 @@ typedef struct s_scene
 	t_object	*planes;
 	t_object	*spheres;
 	t_object	*cylinders;
-	t_light		ambient_light;
-	t_light		light_source;
+	t_light		ambient;
+	t_light		light;
 }	t_scene;
 
+typedef struct	s_main
+{
+	void	*mlx;
+	void	*mw;
+	void	*img;
+	int		win_width;
+	int		win_height;
+	int		pixel_bits;
+	int		line_bytes;
+	int		endian;
+	char	*pixel;
+	t_scene	scene;
+}	t_main;
+
 void	free_and_exit(t_main *m, char *msg, int status);
+int		ft_malloc(void **pointer, int n, int size);
 
 #endif
