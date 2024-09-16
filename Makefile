@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Iinc #-Wall -Wextra -Werror
+CFLAGS = -Iinc -Wall -Wextra -Werror -fsanitize=address,undefined -g3
 NAME = miniRT
 
 LIBFT_DIR = ./lib/Libft/
@@ -35,7 +35,7 @@ endif
 all: $(NAME)
 
 $(NAME): $(MLX) $(OBJS)
-	@$(CC) $(OBJS) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(OBJS) $(CFLAGS) $(MLX_FLAGS) -o $(NAME)
 	@echo "Program Compilation Complete!"
 
 %.o: %.c

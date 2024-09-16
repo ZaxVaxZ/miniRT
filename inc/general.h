@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/15 20:29:36 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/16 04:10:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@
 # define CAMERA 5
 # define LIGHT 6
 # define INVALID -1
+# define ERR_MEM "Memory allocation failed"
+# define SUCCESS "Execution Complete!"
+# define FAILURE "Unexpected error"
 
 typedef struct s_vector
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 }	t_vector;
 
 typedef struct s_vector	t_point;
@@ -45,14 +48,14 @@ typedef struct s_matrix_2d
 {
 	int		rows;
 	int		cols;
-	float	**array;
+	double	**array;
 }	t_matrix_2d;
 
 typedef struct s_object
 {
 	int			object_type;
-	float		radius;
-	float		height;
+	double		radius;
+	double		height;
 	t_point		origin;
 	t_color		color;
 	t_vector	orient;
@@ -62,14 +65,14 @@ typedef struct s_object
 typedef struct s_light
 {
 	int		is_ambient;
-	float	brightness;
+	double	brightness;
 	t_point	origin;
 	t_color	color;
 }	t_light;
 
 typedef struct s_camera
 {
-	float		fov;
+	double		fov;
 	t_point		origin;
 	t_vector	orient;
 	t_matrix_2d	trans_matrix;
@@ -111,6 +114,9 @@ typedef struct	s_main
 }	t_main;
 
 void	free_and_exit(t_main *m, char *msg, int status);
+void	free_matrix(t_matrix_2d *m);
+void	free_scene(t_scene s);
+void	free_double_array(double **arr);
 int		ft_malloc(void **pointer, int n, int size);
 
 #endif

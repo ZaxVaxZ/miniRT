@@ -6,13 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 12:42:34 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/13 21:15:25 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/16 03:55:22 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 
-float	dot(t_vector v1, t_vector v2)
+double	dot(t_vector v1, t_vector v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
@@ -24,12 +24,12 @@ void	cross_vector(t_vector *result, t_vector v1, t_vector v2)
 	result->z = v1.x * v2.y - v1.y * v2.x;
 }
 
-float	magnitude(t_vector v)
+double	magnitude(t_vector v)
 {
 	return (sqrt(dot(v, v)));
 }
 
-void	scalar_op(t_vector *v, char op, float value)
+void	scalar_op(t_vector *v, char op, double value)
 {
 	if (v && op == '+')
 	{

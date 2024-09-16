@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/15 20:36:46 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/16 04:09:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,14 @@ void	init_scene(t_scene *s)
 	s->camera.orient.z = 1;
 }
 
-static void	count_shapes(int count[4], double **objs)
-{
-	int	i;
-
-	if (!objs || !objs[0])
-		return ;
-	i = -1;
-	while (++i < 4)
-		count[i] = 0;
-	i = -1;
-	while (objs[++i][0] != INVALID)
-	{
-		count[CONE] += (objs[i][0] == CONE);
-		count[PLANE] += (objs[i][0] == PLANE);
-		count[SPHERE] += (objs[i][0] == SPHERE);
-		count[CYLINDER] += (objs[i][0] == CYLINDER);
-	}
-}
-
 static void	create_shapes_arr(t_main *m, void **arr_pointer, int cnt, int shape)
 {
 	int	i;
 
 	if (cnt <= 0)
 		return ;
-	if (!ft_malloc(arr_pointer, cnt + 1, sizeof(t_object)))
-		free_and_exit(m, "Memory allocation failed", EXIT_FAILURE);
+	if (ft_malloc(arr_pointer, cnt + 1, sizeof(t_object)))
+		free_and_exit(m, ERR_MEM, EXIT_FAILURE);
 	i = -1;
 	while (++i < cnt)
 		(*((t_object **)arr_pointer))[i].object_type = shape;
@@ -74,15 +55,13 @@ static void	setup_shapes(t_main *m, int cnt[4])
 	create_shapes_arr(m, (void **)&m->scene.spheres, cnt[SPHERE], SPHERE);
 	create_shapes_arr(m, (void **)&m->scene.cylinders, cnt[CYLINDER], CYLINDER);
 }
-#include <stdio.h>
+
 void	setup_scene(t_main *m, double **objs)
 {
 	int	i;
 	int	shape_cnt[4];
 
 	count_shapes(shape_cnt, objs);
-	for(int i=0;i<4;i++)
-		printf("%d\n", shape_cnt[i]);
 	setup_shapes(m, shape_cnt);
 	i = -1;
 	while (objs[++i][0] != INVALID)

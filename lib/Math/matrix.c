@@ -40,37 +40,20 @@ t_matrix_2d	*cross_matrix(const t_matrix_2d *m1, const t_matrix_2d *m2)
 	return (result);
 }
 
-void	free_matrix(t_matrix_2d *m)
-{
-	int	i;
-
-	if (!m || !m->array)
-		return ;
-	i = 0;
-	while (i < m->rows)
-	{
-		if (m->array[i])
-			free(m->array[i]);
-		i++;
-	}
-	free(m->array);
-	m->array = NULL;
-}
-
 int	create_matrix(t_matrix_2d *m, int rows, int cols)
 {
 	int	i;
 	int	j;
 
-	if (!m || rows <= 0 || cols <= 0)
-		return (1);
-	m->array = malloc((rows + 1) * sizeof(int *));
+	m->rows = rows;
+	m->cols = cols;
+	m->array = malloc((m->rows + 1) * sizeof(double *));
 	if (!m->array)
 		return (-1);
-	i = 0;
-	while (i < m->rows)
+	i = -1;
+	while (++i < m->rows)
 	{
-		m->array[i] = malloc((cols) * sizeof(int));
+		m->array[i] = malloc(m->cols * sizeof(double));
 		if (!m->array[i])
 		{
 			free_matrix(m);
@@ -79,7 +62,6 @@ int	create_matrix(t_matrix_2d *m, int rows, int cols)
 		j = -1;
 		while (++j < m->cols)
 			m->array[i][j] = 0;
-		i++;
 	}
 	m->array[i] = NULL;
 	return (0);

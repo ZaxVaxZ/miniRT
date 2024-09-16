@@ -16,8 +16,8 @@
 # include <math.h>
 # include "general.h"
 
-float	dot(t_vector v1, t_vector v2);
-float	magnitude(t_vector v);
+double	dot(t_vector v1, t_vector v2);
+double	magnitude(t_vector v);
 void	cross_vector(t_vector *result, t_vector v1, t_vector v2);
 void	copy_vector(t_vector *dest, const t_vector *src);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:27:20 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/14 17:00:03 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/16 04:05:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	keypress_hook(int keypress, t_main *m)
 {
-	if (keypress == ESC)
+	if (keypress == ESC || keypress == 65307)
 		free_and_exit(m, "Execution Complete!", EXIT_SUCCESS);
 	return (0);
 }
