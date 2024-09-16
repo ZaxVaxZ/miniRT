@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "matrix.h"
+#include "main.h"
 
 t_matrix_2d	*cross_matrix(const t_matrix_2d *m1, const t_matrix_2d *m2)
 {
