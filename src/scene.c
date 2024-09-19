@@ -6,13 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/16 04:09:01 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/18 21:04:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
 
-void	init_scene(t_scene *s)
+void	init_scene(t_scene *s, t_main *m)
 {
 	if (!s)
 		return ;
@@ -20,13 +20,19 @@ void	init_scene(t_scene *s)
 	s->planes = NULL;
 	s->spheres = NULL;
 	s->cylinders = NULL;
-	s->camera.fov = 100;
-	s->camera.origin.x = 0;
-	s->camera.origin.y = 0;
-	s->camera.origin.z = -1;
-	s->camera.orient.x = 0;
-	s->camera.orient.y = 0;
-	s->camera.orient.z = 1;
+	s->camera.fov = 60;
+	s->camera.focal_length = 1;
+	assign(&s->camera.orient, 0, 0, -1);
+	assign(&s->camera.origin, 0, 0, 0);
+	assign(&s->camera.vp_u, m->vp_width, 0, 0);
+    scalar_op(&s->camera.vp_u, &s->camera.vp_u, '*', s->camera.fov);
+	assign(&s->camera.vp_v, 0, -m->vp_height, 0);
+    scalar_op(&s->camera.vp_u_diff, &s->camera.vp_u, '/', m->win_width);
+    scalar_op(&s->camera.vp_v_diff, &s->camera.vp_v, '/', m->win_height);
+    scalar_op(&s->camera.top_left_pos, &s->camera.origin, '+', 0);
+	s->camera.top_left_pos.x -= m->win_width / 2;
+	s->camera.top_left_pos.y -= m->win_height / 2;
+	s->camera.top_left_pos.z += s->camera.focal_length * s->camera.orient.z;
 }
 
 static void	create_shapes_arr(t_main *m, void **arr_pointer, int cnt, int shape)

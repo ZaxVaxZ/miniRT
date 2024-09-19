@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:10:42 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/15 22:29:56 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/18 04:49:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define SCENE_H
 
 # include "general.h"
-# include "matrix.h"
+# include "ft_math.h"
 
-void	init_scene(t_scene *s);
+void	init_scene(t_scene *s, t_main *m);
 void	free_scene(t_scene s);
 void	setup_scene(t_main *m, double **objs);
 void	count_shapes(int count[4], double **objs);

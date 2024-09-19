@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/16 04:10:11 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/18 19:43:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 # include "mlx.h"
 
 # define ASPECT_RATIO 1.778
-# define WIN_HEIGHT 512
+# define WIN_HEIGHT 860
+# define VP_HEIGHT 2
 # define ESC 53
 # define CONE 0
 # define PLANE 1
@@ -73,8 +74,14 @@ typedef struct s_light
 typedef struct s_camera
 {
 	double		fov;
+	double		focal_length;
 	t_point		origin;
 	t_vector	orient;
+	t_vector	vp_u;
+    t_vector	vp_v;
+    t_vector	vp_u_diff;
+    t_vector	vp_v_diff;
+	t_point		top_left_pos;
 	t_matrix_2d	trans_matrix;
 }	t_camera;
 
@@ -106,9 +113,13 @@ typedef struct	s_main
 	void	*img;
 	int		win_width;
 	int		win_height;
+	int		vp_width;
+	int		vp_height;
 	int		pixel_bits;
 	int		line_bytes;
 	int		endian;
+	int		busy;
+	double	aspect_ratio;
 	char	*pixel;
 	t_scene	scene;
 }	t_main;

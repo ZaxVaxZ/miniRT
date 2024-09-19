@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:27:20 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/16 04:05:16 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/18 06:05:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	keypress_hook(int keypress, t_main *m)
 
 int	redraw(t_main *m)
 {
-	draw_rainbow(*m);
+	(void)m;
+	// if (!m->busy)
+	// 	render_scene(m);
+	// draw_rainbow(*m);
 	return (0);
 }
 

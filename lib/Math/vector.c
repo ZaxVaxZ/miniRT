@@ -6,15 +6,22 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 12:42:34 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/16 03:55:22 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/18 04:29:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
+#include "ft_math.h"
 
 double	dot(t_vector v1, t_vector v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
+}
+
+void	assign(t_vector *v, double x, double y, double z)
+{
+	v->x = x;
+	v->y = y;
+	v->z = z;
 }
 
 void	cross_vector(t_vector *result, t_vector v1, t_vector v2)
@@ -24,42 +31,58 @@ void	cross_vector(t_vector *result, t_vector v1, t_vector v2)
 	result->z = v1.x * v2.y - v1.y * v2.x;
 }
 
-double	magnitude(t_vector v)
+void	scalar_op(t_vector *res, t_vector *v, char op, double value)
 {
-	return (sqrt(dot(v, v)));
-}
-
-void	scalar_op(t_vector *v, char op, double value)
-{
-	if (v && op == '+')
+	if (v && res && op == '+')
 	{
-		v->x += value;
-		v->y += value;
-		v->z += value;
+		res->x = v->x + value;
+		res->y = v->y + value;
+		res->z = v->z + value;
 	}
-	if (v && op == '-')
+	if (v && res && op == '-')
 	{
-		v->x -= value;
-		v->y -= value;
-		v->z -= value;
+		res->x = v->x - value;
+		res->y = v->y - value;
+		res->z = v->z - value;
 	}
-	if (v && op == '*')
+	if (v && res && op == '*')
 	{
-		v->x *= value;
-		v->y *= value;
-		v->z *= value;
+		res->x = v->x * value;
+		res->y = v->y * value;
+		res->z = v->z * value;
 	}
-	if (v && op == '/')
+	if (v && res && op == '/')
 	{
-		v->x /= value;
-		v->y /= value;
-		v->z /= value;
+		res->x = v->x / value;
+		res->y = v->y / value;
+		res->z = v->z / value;
 	}
 }
 
-void	normalize(t_vector *v)
+void	vector_op(t_vector *res, t_vector *v1, char op, t_vector *v2)
 {
-	if (!v)
-		return ;
-	scalar_op(v, '/', magnitude(*v));
+	if (v1 && v2 && res && op == '+')
+	{
+		res->x = v1->x + v2->x;
+		res->y = v1->y + v2->y;
+		res->z = v1->z + v2->z;
+	}
+	if (v1 && v2 && res && op == '-')
+	{
+		res->x = v1->x - v2->x;
+		res->y = v1->y - v2->y;
+		res->z = v1->z - v2->z;
+	}
+	if (v1 && v2 && res && op == '*')
+	{
+		res->x = v1->x * v2->x;
+		res->y = v1->y * v2->y;
+		res->z = v1->z * v2->z;
+	}
+	if (v1 && v2 && res && op == '/')
+	{
+		res->x = v1->x / v2->x;
+		res->y = v1->y / v2->y;
+		res->z = v1->z / v2->z;
+	}
 }
