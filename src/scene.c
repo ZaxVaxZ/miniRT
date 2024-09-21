@@ -3,45 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/18 21:04:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:24:02 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
 
-void	init_scene(t_scene *s, t_main *m)
-{
-	if (!s)
-		return ;
-	s->cones = NULL;
-	s->planes = NULL;
-	s->spheres = NULL;
-	s->cylinders = NULL;
-	s->camera.fov = 60;
-	s->camera.focal_length = 1;
-	assign(&s->camera.orient, 0, 0, -1);
-	assign(&s->camera.origin, 0, 0, 0);
-	assign(&s->camera.vp_u, m->vp_width, 0, 0);
-    scalar_op(&s->camera.vp_u, &s->camera.vp_u, '*', s->camera.fov);
-	assign(&s->camera.vp_v, 0, -m->vp_height, 0);
-    scalar_op(&s->camera.vp_u_diff, &s->camera.vp_u, '/', m->win_width);
-    scalar_op(&s->camera.vp_v_diff, &s->camera.vp_v, '/', m->win_height);
-    scalar_op(&s->camera.top_left_pos, &s->camera.origin, '+', 0);
-	s->camera.top_left_pos.x -= m->win_width / 2;
-	s->camera.top_left_pos.y -= m->win_height / 2;
-	s->camera.top_left_pos.z += s->camera.focal_length * s->camera.orient.z;
-}
-
 static void	create_shapes_arr(t_main *m, void **arr_pointer, int cnt, int shape)
 {
 	int	i;
 
-	if (cnt <= 0)
+	if (cnt == 0)
+	{
+		*arr_pointer = NULL;
 		return ;
-	if (ft_malloc(arr_pointer, cnt + 1, sizeof(t_object)))
+	}
+	if (ft_malloc(arr_pointer, cnt, sizeof(t_object)))
 		free_and_exit(m, ERR_MEM, EXIT_FAILURE);
 	i = -1;
 	while (++i < cnt)
@@ -62,11 +42,13 @@ static void	setup_shapes(t_main *m, int cnt[4])
 	create_shapes_arr(m, (void **)&m->scene.cylinders, cnt[CYLINDER], CYLINDER);
 }
 
-void	setup_scene(t_main *m, double **objs)
+void	init_scene(t_main *m, t_scene *s, double **objs)
 {
 	int	i;
 	int	shape_cnt[4];
 
+	if (!m || !s)
+		return ;
 	count_shapes(shape_cnt, objs);
 	setup_shapes(m, shape_cnt);
 	i = -1;
@@ -87,4 +69,18 @@ void	setup_scene(t_main *m, double **objs)
 		if (objs[i][0] == CAMERA)
 			read_camera_values(&m->scene.camera, objs[i]);
 	}
+}
+
+void	setup_scene(t_main *m, t_scene *s)
+{
+	s->camera.focal_length = 1;
+	m->vp_width = 2.0 * tan(s->camera.fov / 360) / s->camera.focal_length;
+	m->vp_height = m->vp_width / m->aspect_ratio;
+	s->camera.vp_u = m->vp_width / m->win_width;
+	s->camera.vp_v = m->vp_height / m->win_height;
+	assign(&s->camera.top_left_pos, s->camera.origin.x - (m->vp_width / 2) +
+		(s->camera.vp_u / 2), s->camera.origin.y + (m->vp_height / 2) -
+		(s->camera.vp_v / 2), s->camera.origin.z - s->camera.focal_length);
+	// printf("~ %lf, %lf, %lf ~\n", m->vp_width, m->vp_height, m->vp_width * m->vp_height);
+	// printf("~ %d, %d~\n", m->win_width, m->win_height);
 }

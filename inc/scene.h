@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:10:42 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/18 04:49:11 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/19 12:21:17 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include "general.h"
 # include "ft_math.h"
 
-void	init_scene(t_scene *s, t_main *m);
+void	init_scene(t_main *m, t_scene *s, double **objs);
+void	setup_scene(t_main *m, t_scene *s);
 void	free_scene(t_scene s);
-void	setup_scene(t_main *m, double **objs);
 void	count_shapes(int count[4], double **objs);
 void	read_camera_values(t_camera *c, double *vals);
 void	read_light_values(t_light *li, double *vals);

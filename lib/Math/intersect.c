@@ -21,10 +21,12 @@ double	intersect_sphere(t_ray *ray, t_object *sp, double *ret)
 
 	a = dot(ray->orient, ray->orient);
 	b = 2 * dot(ray->origin, ray->orient);
-	c = dot(ray->origin, ray->origin) * sp->radius * sp->radius;
+	c = dot(ray->origin, ray->origin) - sp->radius * sp->radius;
 	discriminant = b * b - 4 * a * c;
+	*ret = -1;
 	if (discriminant < 0)
 		return (1);
-	*ret = (-b + sqrt(discriminant)) / (2 * a);
+	// printf("test\n");
+	*ret = (-b - sqrt(discriminant)) / (2 * a);
 	return (0);
 }

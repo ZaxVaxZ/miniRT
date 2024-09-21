@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:31:51 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/18 21:05:46 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:30:02 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ void	init_main_struct(t_main *m)
 	m->win_height = WIN_HEIGHT;
 	m->win_width = m->win_height * ASPECT_RATIO;
 	m->aspect_ratio = ((double) m->win_width / m->win_height);
-	m->vp_height = VP_HEIGHT;
-	m->vp_width = VP_HEIGHT * m->aspect_ratio;
 	int rows=5;
 	double arr[5][12] = 
-	{{CAMERA, 0, 0, 0, 0, 0, -1, 60, 0, 0, 0, 0},
+	{{CAMERA, 0, 0, -1, 0, 0, 1, 100, 0, 0, 0, 0},
 	 {AMBIENT, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	 {LIGHT, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
 	//  {CONE, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -36,7 +34,7 @@ void	init_main_struct(t_main *m)
 	//  {PLANE, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7},
 	//  {PLANE, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
 	//  {PLANE, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-	 {SPHERE, 0, 0, -2, 0, 0, 0, 0.5, 0, 255, 255, 0},
+	 {SPHERE, 0, 0, 2, 0, 0, 0, 0.05, 0, 255, 0, 255},
 	//  {SPHERE, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
 	//  {CYLINDER, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6},
 	 {INVALID, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -47,7 +45,8 @@ void	init_main_struct(t_main *m)
 	for (int i=0;i<rows;i++)
 		for(int j=0;j<12;j++)
 			ptr[i][j] = arr[i][j];
-	setup_scene(m, ptr);
+	init_scene(m, &m->scene, ptr);
+	setup_scene(m, &m->scene);
 	free_double_array(ptr);
 }
 

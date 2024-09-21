@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/18 19:43:19 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:58:31 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include "mlx.h"
-
-# define ASPECT_RATIO 1.778
+//1.778
+# define ASPECT_RATIO 1.6
 # define WIN_HEIGHT 860
-# define VP_HEIGHT 2
 # define ESC 53
 # define CONE 0
 # define PLANE 1
@@ -77,8 +76,8 @@ typedef struct s_camera
 	double		focal_length;
 	t_point		origin;
 	t_vector	orient;
-	t_vector	vp_u;
-    t_vector	vp_v;
+	double		vp_u;
+    double		vp_v;
     t_vector	vp_u_diff;
     t_vector	vp_v_diff;
 	t_point		top_left_pos;
@@ -113,8 +112,8 @@ typedef struct	s_main
 	void	*img;
 	int		win_width;
 	int		win_height;
-	int		vp_width;
-	int		vp_height;
+	double	vp_width;
+	double	vp_height;
 	int		pixel_bits;
 	int		line_bytes;
 	int		endian;
