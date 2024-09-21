@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/19 15:24:02 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/22 02:46:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,31 @@ void	init_scene(t_main *m, t_scene *s, double **objs)
 	while (objs[++i][0] != INVALID)
 	{
 		if (objs[i][0] == CONE)
-			read_shape_values(m, &m->scene.cones[m->scene.co_cnt++], objs[i]);
+			read_shape_values(m, &s->cones[s->co_cnt++], objs[i]);
 		if (objs[i][0] == PLANE)
-			read_shape_values(m, &m->scene.planes[m->scene.pl_cnt++], objs[i]);
+			read_shape_values(m, &s->planes[s->pl_cnt++], objs[i]);
 		if (objs[i][0] == SPHERE)
-			read_shape_values(m, &m->scene.spheres[m->scene.sp_cnt++], objs[i]);
+			read_shape_values(m, &s->spheres[s->sp_cnt++], objs[i]);
 		if (objs[i][0] == CYLINDER)
-			read_shape_values(m, &m->scene.cylinders[m->scene.cy_cnt++], objs[i]);
+			read_shape_values(m, &s->cylinders[s->cy_cnt++], objs[i]);
 		if (objs[i][0] == AMBIENT)
-			read_light_values(&m->scene.ambient, objs[i]);
+			read_light_values(&s->ambient, objs[i]);
 		if (objs[i][0] == LIGHT)
-			read_light_values(&m->scene.light, objs[i]);
+			read_light_values(&s->light, objs[i]);
 		if (objs[i][0] == CAMERA)
-			read_camera_values(&m->scene.camera, objs[i]);
+			read_camera_values(&s->camera, objs[i]);
 	}
 }
 
 void	setup_scene(t_main *m, t_scene *s)
 {
-	s->camera.focal_length = 1;
-	m->vp_width = 2.0 * tan(s->camera.fov / 360) / s->camera.focal_length;
+	s->camera.focal_len = 1;
+	m->vp_width = 2.0 * tan((s->camera.fov * PI) / 360) / s->camera.focal_len;
 	m->vp_height = m->vp_width / m->aspect_ratio;
 	s->camera.vp_u = m->vp_width / m->win_width;
 	s->camera.vp_v = m->vp_height / m->win_height;
-	assign(&s->camera.top_left_pos, s->camera.origin.x - (m->vp_width / 2) +
-		(s->camera.vp_u / 2), s->camera.origin.y + (m->vp_height / 2) -
-		(s->camera.vp_v / 2), s->camera.origin.z - s->camera.focal_length);
-	// printf("~ %lf, %lf, %lf ~\n", m->vp_width, m->vp_height, m->vp_width * m->vp_height);
-	// printf("~ %d, %d~\n", m->win_width, m->win_height);
+	assign(&s->camera.top_left_pos,
+		s->camera.origin.x - (m->vp_width / 2) + (s->camera.vp_u / 2),
+		s->camera.origin.y - (m->vp_height / 2) - (s->camera.vp_v / 2),
+		s->camera.origin.z + s->camera.focal_len * s->camera.orient.z);
 }

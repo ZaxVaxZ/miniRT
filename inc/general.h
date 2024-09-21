@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   general.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/19 16:58:31 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/09/22 03:13:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#ifndef GENERAL_H
+# define GENERAL_H
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -33,6 +33,7 @@
 # define ERR_MEM "Memory allocation failed"
 # define SUCCESS "Execution Complete!"
 # define FAILURE "Unexpected error"
+# define PI 3.141592653589793238
 
 typedef struct s_vector
 {
@@ -72,14 +73,14 @@ typedef struct s_light
 
 typedef struct s_camera
 {
-	double		fov;
-	double		focal_length;
 	t_point		origin;
 	t_vector	orient;
+	double		focal_len;
+	double		fov;
 	double		vp_u;
-    double		vp_v;
-    t_vector	vp_u_diff;
-    t_vector	vp_v_diff;
+	double		vp_v;
+	t_vector	vp_u_diff;
+	t_vector	vp_v_diff;
 	t_point		top_left_pos;
 	t_matrix_2d	trans_matrix;
 }	t_camera;
@@ -89,6 +90,15 @@ typedef struct s_ray
 	t_point		origin;
 	t_vector	orient;
 }	t_ray;
+
+typedef struct s_hit
+{
+	int		i;
+	int		j;
+	t_ray	ray;
+	t_color	color;
+	double	closest;
+}	t_hit;
 
 typedef struct s_scene
 {
@@ -105,7 +115,7 @@ typedef struct s_scene
 	t_light		light;
 }	t_scene;
 
-typedef struct	s_main
+typedef struct s_main
 {
 	void	*mlx;
 	void	*mw;

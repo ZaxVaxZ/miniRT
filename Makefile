@@ -14,6 +14,10 @@ MATH_DIR = ./lib/Math/
 MATH_SRC = matrix.c vector.c intersect.c
 SRCS += $(addprefix $(MATH_DIR), $(MATH_SRC))
 
+TMP_DIR = ./tmp/
+TMP_SRC = render_extras.c
+SRCS += $(addprefix $(TMP_DIR), $(TMP_SRC))
+
 SRC_DIR = ./src/
 CFILES = miniRT.c render.c hooks.c free.c parser.c scene.c read_values.c
 SRCS += $(addprefix $(SRC_DIR), $(CFILES))

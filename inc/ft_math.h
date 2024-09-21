@@ -25,7 +25,8 @@ void		cross_vector(t_vector *result, t_vector v1, t_vector v2);
 void		scalar_op(t_vector *res, t_vector *v, char op, double value);
 void		vector_op(t_vector *res, t_vector *v1, char op, t_vector *v2);
 void		assign(t_vector *v, double x, double y, double z);
+void		normal_at(t_vector *ret, t_ray *ray, t_object *o, double t);
 double		dot(t_vector v1, t_vector v2);
-double		intersect_sphere(t_ray *ray, t_object *sp, double *ret);
+double		hit_sphere(t_ray *ray, t_object *sp, double *ret);
 
 #endif
