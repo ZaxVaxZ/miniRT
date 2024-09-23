@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/22 03:13:32 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/22 23:46:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,13 @@ typedef struct s_ray
 
 typedef struct s_hit
 {
-	int		i;
-	int		j;
-	t_ray	ray;
-	t_color	color;
-	double	closest;
+	int			i;
+	int			j;
+	double		closest;
+	t_color		color;
+	t_vector	normal;
+	t_point		hitp;
+	t_object	*obj;
 }	t_hit;
 
 typedef struct s_scene
@@ -138,5 +140,6 @@ void	free_matrix(t_matrix_2d *m);
 void	free_scene(t_scene s);
 void	free_double_array(double **arr);
 int		ft_malloc(void **pointer, int n, int size);
+double	**get_objs();
 
 #endif

@@ -60,7 +60,7 @@ void	draw_grid(t_main *m, t_ray *ray, int i, int j)
 {
 	if (!m || !ray)
 		return ;
-	if ((int)(ray->orient.x * 100) % 10 == 0)
+	if ((int)(ray->orient.z * 100) % 10 == 0)
 		color_pixel(m, j, i, 0xcccccc);
 	if ((int)(ray->orient.y * 100) % 10 == 0)
 		color_pixel(m, j, i, 0xcccccc);

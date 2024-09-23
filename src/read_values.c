@@ -31,7 +31,7 @@ void	read_light_values(t_light *li, double *vals)
 	int	i;
 
 	i = 0;
-	li->is_ambient = (vals[i++] == AMBIENT);
+	li->is_ambient = is_equal(vals[i++], AMBIENT);
 	li->origin.x = vals[i++];
 	li->origin.y = vals[i++];
 	li->origin.z = vals[i++];
@@ -80,9 +80,9 @@ void	count_shapes(int count[4], double **objs)
 	i = -1;
 	while (objs[++i][0] != INVALID)
 	{
-		count[CONE] += (objs[i][0] == CONE);
-		count[PLANE] += (objs[i][0] == PLANE);
-		count[SPHERE] += (objs[i][0] == SPHERE);
-		count[CYLINDER] += (objs[i][0] == CYLINDER);
+		count[CONE] += is_equal(objs[i][0], CONE);
+		count[PLANE] += is_equal(objs[i][0], PLANE);
+		count[SPHERE] += is_equal(objs[i][0], SPHERE);
+		count[CYLINDER] += is_equal(objs[i][0], CYLINDER);
 	}
 }

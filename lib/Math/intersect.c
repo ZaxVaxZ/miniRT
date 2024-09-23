@@ -12,44 +12,111 @@
 
 #include "ft_math.h"
 
-double	hit_sphere(t_ray *ray, t_object *sp, double *ret)
+void	normal_at(t_ray *ray, t_hit *hit, double t)
 {
-	t_vector	C_Q;
-	double		a;
-	double		b;
-	double		c;
-	double		discriminant;
-
-	a = dot(ray->orient, ray->orient);
-	vector_op(&C_Q, &sp->origin, '-', &ray->origin);
-	b = 2 * dot(ray->orient, C_Q);
-	c = dot(C_Q, C_Q) - sp->radius * sp->radius;
-	discriminant = b * b - 4 * a * c;
-	*ret = -1;
-	if (discriminant < 0 || !a)
-		return (1);
-	if ((-b - sqrt(discriminant)) / (2 * a) > 0)
-		*ret = (-b - sqrt(discriminant)) / (2 * a);
-	else
-		*ret = (-b + sqrt(discriminant)) / (2 * a);
-	// 	if (!hit_sphere(&ray, &m->scene.spheres[0], &ret) && ret >= 0)
-	// 	{
-	// 		scalar_op(&ray.orient, &ray.orient, '*', ret);
-	// 		vector_op(&ray.orient, &ray.orient, '+', &ray.origin);
-	// 		vector_op(&ray.orient, &ray.orient, '-', &m->scene.spheres[0].origin);
-	// 		scalar_op(&ray.orient, &ray.orient, '+', 1);
-	// 		scalar_op(&ray.orient, &ray.orient, '*', 0.5);
-	// 		color_pixel(m, j, i, color_to_hex(ray.orient));
-	// 	}
-	return (0);
+	scalar_op(&hit->normal, &ray->orient, '*', t);
+	vector_op(&hit->normal, &ray->orient, '+', &ray->origin);
+	vector_op(&hit->normal, &ray->orient, '-', &hit->obj->origin);
+	scalar_op(&hit->normal, &ray->orient, '+', 1);
+	scalar_op(&hit->normal, &ray->orient, '*', 0.5);
 }
 
-void	normal_at(t_vector *ret, t_ray *ray, t_object *o, double t)
+void	hit_sphere(t_ray *ray, t_object *sp, t_hit *hit)
 {
-	ret->x = ray->origin.x + t * ray->orient.x - o->origin.x;
-	ret->y = ray->origin.y + t * ray->orient.y - o->origin.y;
-	ret->z = ray->origin.z + t * ray->orient.z - o->origin.z;
-	scalar_op(ret, ret, '/', sqrt(dot(*ret, *ret)));
-	scalar_op(ret, ret, '+', 1);
-	scalar_op(ret, ret, '*', 0.5);
+	double		vals[5];
+	t_vector	C_Q;
+
+	vals[A] = dot(ray->orient, ray->orient);
+	vector_op(&C_Q, &sp->origin, '-', &ray->origin);
+	vals[B] = 2.0 * dot(ray->orient, C_Q);
+	vals[C] = dot(C_Q, C_Q) - sp->radius * sp->radius;
+	vals[DISC] = vals[B] * vals[B] - 4.0 * vals[A] * vals[C];
+	if (vals[DISC] < 0 || !vals[A])
+		return ;
+	if ((-vals[B] - sqrt(vals[DISC])) / (2 * vals[A]) > 0)
+		vals[RESULT] = (-vals[B] - sqrt(vals[DISC])) / (2 * vals[A]);
+	else
+		vals[RESULT] = (-vals[B] + sqrt(vals[DISC])) / (2 * vals[A]);
+	// if (hit->i % 100 == 0 && hit->j % 100 == 0)
+	// 	printf("%lf\n", vals[RESULT]);
+	if (vals[RESULT] >= 0 && (hit->closest == -1 || vals[RESULT] < hit->closest))
+	{
+		hit->obj = sp;
+		hit->closest = vals[RESULT];
+		scalar_op(&hit->hitp, &ray->orient, '*', vals[RESULT]);
+		vector_op(&hit->hitp, &ray->orient, '+', &ray->origin);
+		copy_vector(&hit->color, &sp->color);
+		normal_at(ray, hit, vals[RESULT]);
+	}
+}
+
+void	hit_plane(t_ray *ray, t_object *pl, t_hit *hit)
+{
+	t_vector	tmp;
+	double		result;
+	double		denominator;
+
+	denominator = dot(pl->orient, ray->orient);
+	if (denominator >= -1e-6 && denominator <= 1e-6)
+		return ;
+	vector_op(&tmp, &pl->origin, '-', &ray->origin);
+	result = dot(tmp, pl->orient) / denominator;
+	if (result <= 0)
+		return ;
+	if (hit->closest == -1 || result < hit->closest)
+	{
+		hit->obj = pl;
+		hit->closest = result;
+		scalar_op(&hit->hitp, &ray->orient, '*', result);
+		vector_op(&hit->hitp, &ray->orient, '+', &ray->origin);
+		copy_vector(&hit->color, &pl->color);
+		copy_vector(&hit->normal, &pl->orient);
+		// normal_at(ray, hit, result);
+	}
+}
+
+void	hit_cone(t_ray *ray, t_object *sp, t_hit *hit)
+{
+	double		vals[5];
+	t_vector	C_Q;
+
+	vals[A] = dot(ray->orient, ray->orient);
+	vector_op(&C_Q, &sp->origin, '-', &ray->origin);
+	vals[B] = 2 * dot(ray->orient, C_Q);
+	vals[C] = dot(C_Q, C_Q) - sp->radius * sp->radius;
+	vals[DISC] = vals[B] * vals[B] - 4 * vals[A] * vals[C];
+	if (vals[DISC] < 0 || !vals[A])
+		return ;
+	if ((-vals[B] - sqrt(vals[DISC])) / (2 * vals[A]) > 0)
+		vals[RESULT] = (-vals[B] - sqrt(vals[DISC])) / (2 * vals[A]);
+	else
+		vals[RESULT] = (-vals[B] + sqrt(vals[DISC])) / (2 * vals[A]);
+	if (hit->closest == -1 || vals[RESULT] < hit->closest)
+	{
+		hit->closest = vals[RESULT];
+		hit->obj = sp;
+	}
+}
+
+void	hit_cylinder(t_ray *ray, t_object *sp, t_hit *hit)
+{
+	double		vals[5];
+	t_vector	C_Q;
+
+	vals[A] = dot(ray->orient, ray->orient);
+	vector_op(&C_Q, &sp->origin, '-', &ray->origin);
+	vals[B] = 2 * dot(ray->orient, C_Q);
+	vals[C] = dot(C_Q, C_Q) - sp->radius * sp->radius;
+	vals[DISC] = vals[B] * vals[B] - 4 * vals[A] * vals[C];
+	if (vals[DISC] < 0 || !vals[A])
+		return ;
+	if ((-vals[B] - sqrt(vals[DISC])) / (2 * vals[A]) > 0)
+		vals[RESULT] = (-vals[B] - sqrt(vals[DISC])) / (2 * vals[A]);
+	else
+		vals[RESULT] = (-vals[B] + sqrt(vals[DISC])) / (2 * vals[A]);
+	if (hit->closest == -1 || vals[RESULT] < hit->closest)
+	{
+		hit->closest = vals[RESULT];
+		hit->obj = sp;
+	}
 }

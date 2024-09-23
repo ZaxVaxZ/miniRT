@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:28:33 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/22 03:10:02 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/24 00:31:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,45 @@ void	color_pixel(t_main *m, int x, int y, unsigned int color)
 
 static unsigned int	color_to_hex(t_color color)
 {
-	if (color.x > 1)
-		color.x = 1;
-	if (color.y > 1)
-		color.y = 1;
-	if (color.z > 1)
-		color.z = 1;
+	if (color.x > 255)
+		color.x = 255;
+	if (color.y > 255)
+		color.y = 255;
+	if (color.z > 255)
+		color.z = 255;
 	if (color.x < 0)
 		color.x = 0;
 	if (color.y < 0)
 		color.y = 0;
 	if (color.z < 0)
 		color.z = 0;
-	return ((((unsigned int)(color.x * 255)) << 16) +
-		(((unsigned int)(color.y * 255)) << 8) +
-			(((unsigned int)(color.z * 255))));
+	return ((((unsigned int)color.x) << 16) +
+		(((unsigned int)color.y) << 8) +
+			(((unsigned int)color.z)));
+}
+
+void	light_up(t_main *m, t_hit *hit)
+{
+	double		light;
+	double		li_dot;
+	t_vector	to_light;
+
+	if (!m || !hit)
+		return ;
+	light = m->scene.ambient.brightness;
+	vector_op(&to_light, &m->scene.light.origin, '-', &hit->hitp);
+	// vector_op(&to_light, &hit->hitp, '-', &m->scene.light.origin);
+	// if (hit->i % 100 == 0 && hit->j % 100 == 0)
+	// 	printf("----- %lf, %lf, %lf\n", hit->hitp.x, hit->hitp.y, hit->hitp.z);
+	li_dot = dot(to_light, hit->normal);
+	// if (hit->obj->object_type == PLANE && hit->i % 100 == 0 && hit->j % 100 == 0)
+	// 	printf("~ %lf, %lf, %lf ~~ %lf <> %lf\n", hit->hitp.x, hit->hitp.y, hit->hitp.z, li_dot, light);
+	if (li_dot > 0)
+		light += m->scene.light.brightness * li_dot /
+			(sqrt(dot(hit->normal, hit->normal)) * sqrt(dot(to_light, to_light)));
+	// if (hit->obj->object_type == PLANE && hit->i % 100 == 0 && hit->j % 100 == 0)
+	// 	printf("%lf, %lf, %lf, <> %lf\n", hit->obj->origin.x, hit->obj->origin.y, hit->obj->origin.z, light);
+	scalar_op(&hit->color, &hit->color, '*', light);
 }
 
 void	hit_objects(t_main *m, t_ray *ray, int i, int j)
@@ -64,25 +88,27 @@ void	hit_objects(t_main *m, t_ray *ray, int i, int j)
 	hit.i = i;
 	hit.j = j;
 	hit.closest = -1;
-	assign(&hit.color, 0, 0, 0);
-	scalar_op(&hit.ray, ray, '+', 0);
 	u = -1;
 	while (++u < m->scene.co_cnt)
-		hit_sphere(ray, hit);
-	u = -1;
-	while (++u < m->scene.pl_cnt)
-		hit_sphere(ray, hit);
+		hit_cone(ray, &m->scene.cones[u], &hit);
 	u = -1;
 	while (++u < m->scene.sp_cnt)
-		hit_sphere(ray, hit);
+		hit_sphere(ray, &m->scene.spheres[u], &hit);
+	u = -1;
+	while (++u < m->scene.pl_cnt)
+		hit_plane(ray, &m->scene.planes[u], &hit);
 	u = -1;
 	while (++u < m->scene.cy_cnt)
-		hit_sphere(ray, hit);
+		hit_cylinder(ray, &m->scene.cylinders[u], &hit);
+	if (hit.closest > -1)
+	{
+		light_up(m, &hit);
+		color_pixel(m, j, i, color_to_hex(hit.color));
+	}
 }
 
 void	render_scene(t_main *m)
 {
-	double	ret;
 	t_ray	ray;
 	int		i;
 	int		j;
@@ -99,7 +125,8 @@ void	render_scene(t_main *m)
 		{
 			scalar_op(&ray.orient, &m->scene.camera.top_left_pos, '+', 0);
 			ray.orient.x += j * m->scene.camera.vp_u;
-			ray.orient.y += i * m->scene.camera.vp_v;
+			ray.orient.y -= i * m->scene.camera.vp_v;
+			draw_grid(m, &ray, i, j);
 			hit_objects(m, &ray, i, j);
 		}
 	}
