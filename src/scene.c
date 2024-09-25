@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/24 00:31:01 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/25 05:17:50 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void	init_scene(t_main *m, t_scene *s, double **objs)
 	int	i;
 	int	shape_cnt[4];
 
-	if (!m || !s)
-		return ;
 	count_shapes(shape_cnt, objs);
 	setup_shapes(m, shape_cnt);
 	i = -1;
@@ -62,12 +60,12 @@ void	init_scene(t_main *m, t_scene *s, double **objs)
 			read_shape_values(m, &s->spheres[s->sp_cnt++], objs[i]);
 		if (is_equal(objs[i][0], CYLINDER))
 			read_shape_values(m, &s->cylinders[s->cy_cnt++], objs[i]);
+		if (is_equal(objs[i][0], CAMERA))
+			read_camera_values(m, &s->camera, objs[i]);
 		if (is_equal(objs[i][0], AMBIENT))
 			read_light_values(&s->ambient, objs[i]);
 		if (is_equal(objs[i][0], LIGHT))
 			read_light_values(&s->light, objs[i]);
-		if (is_equal(objs[i][0], CAMERA))
-			read_camera_values(&s->camera, objs[i]);
 	}
 }
 
@@ -79,7 +77,12 @@ void	setup_scene(t_main *m, t_scene *s)
 	s->camera.vp_u = m->vp_width / m->win_width;
 	s->camera.vp_v = m->vp_height / m->win_height;
 	assign(&s->camera.top_left_pos,
-		s->camera.origin.x - (m->vp_width / 2) + (s->camera.vp_u / 2),
-		s->camera.origin.y + (m->vp_height / 2) - (s->camera.vp_v / 2),
-		s->camera.origin.z + s->camera.focal_len * s->camera.orient.z);
+		-(m->vp_width / 2.0) + (s->camera.vp_u / 2.0),
+		(m->vp_height / 2.0) - (s->camera.vp_v / 2.0),
+		-s->camera.focal_len);
 }
+
+// void	setup_transformation(t_main *m, t_scene *s)
+// {
+	
+// }

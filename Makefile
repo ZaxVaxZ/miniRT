@@ -11,7 +11,7 @@ GNL_SRC = get_next_line.c get_next_line_utils.c
 SRCS += $(addprefix $(GNL_DIR), $(GNL_SRC))
 
 MATH_DIR = ./lib/Math/
-MATH_SRC = math_utils.c matrix.c vector.c intersect.c
+MATH_SRC = math_utils.c transform.c matrix.c vector.c intersect.c
 SRCS += $(addprefix $(MATH_DIR), $(MATH_SRC))
 
 TMP_DIR = ./tmp/

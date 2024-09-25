@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/22 23:46:23 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/26 02:11:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include "mlx.h"
 //1.778
-# define ASPECT_RATIO 1.6
+# define ASPECT_RATIO 1.778
 # define WIN_HEIGHT 860
 # define ESC 53
 # define CONE 0
@@ -40,6 +40,7 @@ typedef struct s_vector
 	double	x;
 	double	y;
 	double	z;
+	double	quat[4];
 }	t_vector;
 
 typedef struct s_vector	t_point;
@@ -130,8 +131,9 @@ typedef struct s_main
 	int		line_bytes;
 	int		endian;
 	int		busy;
-	double	aspect_ratio;
 	char	*pixel;
+	double	aspect_ratio;
+	double	**objs;
 	t_scene	scene;
 }	t_main;
 

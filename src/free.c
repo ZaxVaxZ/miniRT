@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:39:48 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/16 04:51:05 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/24 09:40:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	free_and_exit(t_main *m, char *msg, int status)
 		status = EXIT_FAILURE;
 	if (printf("%s\n", msg) < 0)
 		status = EXIT_FAILURE;
+	free_double_array(m->objs);
 	free_scene(m->scene);
 	if (m->img && m->mlx)
 		mlx_destroy_image(m->mlx, m->img);

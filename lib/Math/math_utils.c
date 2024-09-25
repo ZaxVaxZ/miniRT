@@ -19,9 +19,12 @@ int	is_equal(double x, double y)
 
 void	normalize(t_vector *v)
 {
-	v->x /= dot(*v, *v);
-	v->y /= dot(*v, *v);
-	v->z /= dot(*v, *v);
+	double	len;
+
+	len = sqrt(dot(*v, *v));
+	v->x /= len;
+	v->y /= len;
+	v->z /= len;
 }
 
 void	copy_vector(t_vector *v1, t_vector *v2)

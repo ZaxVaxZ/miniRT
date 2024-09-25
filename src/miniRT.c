@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:31:51 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/22 03:17:27 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/24 09:39:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 void	init_main_struct(t_main *m)
 {
-	double	**objs;
-
 	m->busy = 0;
 	m->mlx = NULL;
 	m->mw = NULL;
 	m->img = NULL;
 	m->pixel = NULL;
+	m->objs = NULL;
 	m->win_height = WIN_HEIGHT;
 	m->win_width = m->win_height * ASPECT_RATIO;
 	m->aspect_ratio = ((double) m->win_width / m->win_height);
-	objs = get_objs();
-	init_scene(m, &m->scene, objs);
+	m->objs = get_objs();
+	init_scene(m, &m->scene, m->objs);
 	setup_scene(m, &m->scene);
-	free_double_array(objs);
+	free_double_array(m->objs);
+	m->objs = NULL;
+	if (m->scene.camera.fov < 0 || m->scene.camera.fov > 180)
+		free_and_exit(m, "Error\nInvalid FOV value!\n", EXIT_FAILURE);
 }
 
 int	main(void)

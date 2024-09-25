@@ -29,7 +29,7 @@ void	draw_rainbow(t_main *m)
 			b += (!a && c > 0) - (!c && b > 0);
 			c += (!b && a > 0) - (!a && c > 0);
 			color = (a << 16) + (b << 8) + c;
-			color_pixel(m, x, y, color);
+			color_pixel(m, y, x, color);
 		}
 	}
 }
@@ -53,15 +53,15 @@ void	background_gradient(t_main *m, t_ray *ray, int i, int j)
 	c2 = (((int)(top_down.x * 255)) << 16) +
 		(((int)(top_down.y * 255)) << 8) +
 			(((int)(top_down.z * 255)));
-	color_pixel(m, j, i, c1 + c2);
+	color_pixel(m, i, j, c1 + c2);
 }
 
 void	draw_grid(t_main *m, t_ray *ray, int i, int j)
 {
 	if (!m || !ray)
 		return ;
-	if ((int)(ray->orient.z * 100) % 10 == 0)
-		color_pixel(m, j, i, 0xcccccc);
+	if ((int)(ray->orient.x * 100) % 10 == 0)
+		color_pixel(m, i, j, 0xcccccc);
 	if ((int)(ray->orient.y * 100) % 10 == 0)
-		color_pixel(m, j, i, 0xcccccc);
+		color_pixel(m, i, j, 0xcccccc);
 }

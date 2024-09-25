@@ -31,8 +31,7 @@ void		cross_vector(t_vector *result, t_vector v1, t_vector v2);
 void		scalar_op(t_vector *res, t_vector *v, char op, double value);
 void		vector_op(t_vector *res, t_vector *v1, char op, t_vector *v2);
 void		assign(t_vector *v, double x, double y, double z);
-void		normal_at(t_ray *ray, t_hit *hit, double t);
-void		hit_sphere(t_ray *ray, t_object *sp, t_hit *hit);
+void		hit_sphere(t_camera *c, t_ray ray, t_object sp, t_hit *hit);
 void		hit_cone(t_ray *ray, t_object *sp, t_hit *hit);
 void		hit_cylinder(t_ray *ray, t_object *sp, t_hit *hit);
 void		hit_plane(t_ray *ray, t_object *sp, t_hit *hit);
@@ -40,5 +39,10 @@ void		normalize(t_vector *v);
 int			is_equal(double x, double y);
 double		dot(t_vector v1, t_vector v2);
 void		copy_vector(t_vector *v1, t_vector *v2);
+void		scale_and_translate(t_main *m, t_object *o, t_camera *c);
+void		rotation_object(t_object *o);
+void		rotation_camera(t_camera *c);
+void		transform_vector(t_matrix_2d *m, t_vector *v, int is_point);
+
 
 #endif

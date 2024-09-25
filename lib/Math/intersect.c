@@ -12,24 +12,36 @@
 
 #include "ft_math.h"
 
-void	normal_at(t_ray *ray, t_hit *hit, double t)
+static void	transform_object(t_camera *c, t_object *o)
 {
-	scalar_op(&hit->normal, &ray->orient, '*', t);
-	vector_op(&hit->normal, &ray->orient, '+', &ray->origin);
-	vector_op(&hit->normal, &ray->orient, '-', &hit->obj->origin);
-	scalar_op(&hit->normal, &ray->orient, '+', 1);
-	scalar_op(&hit->normal, &ray->orient, '*', 0.5);
+	transform_vector(&c->trans_matrix, &o->origin, 1);
+	// o->origin.x += c->trans_matrix.array[0][3];
+	// o->origin.y += c->trans_matrix.array[1][3];
+	// o->origin.z += c->trans_matrix.array[2][3];
+	if (o->object_type != SPHERE)
+		transform_vector(&c->trans_matrix, &o->orient, 0);
 }
 
-void	hit_sphere(t_ray *ray, t_object *sp, t_hit *hit)
+void	hit_sphere(t_camera *c, t_ray ray, t_object sp, t_hit *hit)
 {
 	double		vals[5];
 	t_vector	C_Q;
-
-	vals[A] = dot(ray->orient, ray->orient);
-	vector_op(&C_Q, &sp->origin, '-', &ray->origin);
-	vals[B] = 2.0 * dot(ray->orient, C_Q);
-	vals[C] = dot(C_Q, C_Q) - sp->radius * sp->radius;
+(void)c; (void)transform_object;
+	// if (hit->i % 100 == 0 && hit->j % 100 == 0)
+	// 	printf("o1: %lf, %lf, %lf\n", sp.origin.x, sp.origin.y, sp.origin.z);
+	transform_object(c, &sp);
+	// transform_vector(&sp.trans_matrix, &ray.origin, 1);
+	// transform_vector(&sp.trans_matrix, &ray.orient, 0);
+	// if (hit->i % 100 == 0 && hit->j % 100 == 0)
+	// {
+	// 	printf("o2: %lf, %lf, %lf\n", sp.origin.x, sp.origin.y, sp.origin.z);
+	// 	printf("rayo: %lf, %lf, %lf\n", ray.origin.x, ray.origin.y, ray.origin.z);
+	// 	printf("rayd: %lf, %lf, %lf\n", ray.orient.x, ray.orient.y, ray.orient.z);
+	// }
+	vals[A] = dot(ray.orient, ray.orient);
+	vector_op(&C_Q, &sp.origin, '-', &ray.origin);
+	vals[B] = -2.0 * dot(ray.orient, C_Q);
+	vals[C] = dot(C_Q, C_Q) - sp.radius * sp.radius;
 	vals[DISC] = vals[B] * vals[B] - 4.0 * vals[A] * vals[C];
 	if (vals[DISC] < 0 || !vals[A])
 		return ;
@@ -37,16 +49,14 @@ void	hit_sphere(t_ray *ray, t_object *sp, t_hit *hit)
 		vals[RESULT] = (-vals[B] - sqrt(vals[DISC])) / (2 * vals[A]);
 	else
 		vals[RESULT] = (-vals[B] + sqrt(vals[DISC])) / (2 * vals[A]);
-	// if (hit->i % 100 == 0 && hit->j % 100 == 0)
-	// 	printf("%lf\n", vals[RESULT]);
 	if (vals[RESULT] >= 0 && (hit->closest == -1 || vals[RESULT] < hit->closest))
 	{
-		hit->obj = sp;
 		hit->closest = vals[RESULT];
-		scalar_op(&hit->hitp, &ray->orient, '*', vals[RESULT]);
-		vector_op(&hit->hitp, &ray->orient, '+', &ray->origin);
-		copy_vector(&hit->color, &sp->color);
-		normal_at(ray, hit, vals[RESULT]);
+		scalar_op(&hit->hitp, &ray.orient, '*', vals[RESULT]);
+		vector_op(&hit->hitp, &ray.orient, '+', &ray.origin);
+		copy_vector(&hit->color, &sp.color);
+		vector_op(&hit->normal, &hit->hitp, '-', &sp.origin);
+		normalize(&hit->normal);
 	}
 }
 

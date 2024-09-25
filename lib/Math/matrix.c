@@ -14,9 +14,9 @@
 
 t_matrix_2d	*cross_matrix(const t_matrix_2d *m1, const t_matrix_2d *m2)
 {
-	int		i;
-	int		ri;
-	int		rj;
+	int			i;
+	int			ri;
+	int			rj;
 	t_matrix_2d	*result;
 
 	if (!m1 || !m2 || !m1->array || !m2->array || m1->cols != m2->rows)
