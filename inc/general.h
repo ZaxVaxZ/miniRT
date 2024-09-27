@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/26 02:11:06 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/27 06:13:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct s_camera
 {
 	t_point		origin;
 	t_vector	orient;
+	t_vector	up;
+	t_vector	right;
 	double		focal_len;
 	double		fov;
 	double		vp_u;

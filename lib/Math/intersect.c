@@ -29,7 +29,15 @@ void	hit_sphere(t_camera *c, t_ray ray, t_object sp, t_hit *hit)
 (void)c; (void)transform_object;
 	// if (hit->i % 100 == 0 && hit->j % 100 == 0)
 	// 	printf("o1: %lf, %lf, %lf\n", sp.origin.x, sp.origin.y, sp.origin.z);
+	static int pr = 0;
+	// if (is_equal(sp.origin.x, 1) && is_equal(sp.origin.y, 1) && is_equal(sp.origin.z, 1))
+	if (sp.origin.x == 0)
+		pr++;
 	transform_object(c, &sp);
+	if (pr == 1)
+		printf("~ %lf, %lf, %lf\n", sp.origin.x, sp.origin.y, sp.origin.z);
+	if (pr)
+		pr++;
 	// transform_vector(&sp.trans_matrix, &ray.origin, 1);
 	// transform_vector(&sp.trans_matrix, &ray.orient, 0);
 	// if (hit->i % 100 == 0 && hit->j % 100 == 0)

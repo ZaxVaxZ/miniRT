@@ -24,18 +24,18 @@ t_matrix_2d	*cross_matrix(const t_matrix_2d *m1, const t_matrix_2d *m2)
 	result = malloc(sizeof(t_matrix_2d));
 	if (!result)
 		return (NULL);
-	if (create_matrix(result, m1->rows, m2->cols) < 1)
+	if (create_matrix(result, m1->rows, m2->cols))
 		return (NULL);
 	ri = 0;
 	rj = 0;
-	i = -1;
 	while (ri < result->rows)
 	{
+		i = -1;
 		while (++i < m1->cols)
 			result->array[ri][rj] += m1->array[ri][i] * m2->array[i][rj];
 		rj++;
-		ri += (rj == result->cols);
-		rj *= (rj == result->cols);
+		ri += (rj >= result->cols);
+		rj *= (rj < result->cols);
 	}
 	return (result);
 }
@@ -47,7 +47,7 @@ int	create_matrix(t_matrix_2d *m, int rows, int cols)
 
 	m->rows = rows;
 	m->cols = cols;
-	m->array = malloc((m->rows + 1) * sizeof(double *));
+	m->array = malloc((m->rows) * sizeof(double *));
 	if (!m->array)
 		return (-1);
 	i = -1;
@@ -63,7 +63,6 @@ int	create_matrix(t_matrix_2d *m, int rows, int cols)
 		while (++j < m->cols)
 			m->array[i][j] = 0;
 	}
-	m->array[i] = NULL;
 	return (0);
 }
 
@@ -78,6 +77,8 @@ int	copy_matrix(t_matrix_2d *dest, const t_matrix_2d *src)
 	ret = create_matrix(dest, src->rows, src->cols);
 	if (ret)
 		return (ret);
+	dest->rows = src->rows;
+	dest->cols = src->cols;
 	i = 0;
 	while (i < src->rows)
 	{

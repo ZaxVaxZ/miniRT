@@ -30,11 +30,14 @@ void	read_camera_values(t_main *m, t_camera *c, double *vals)
 	c->trans_matrix.array[1][1] = 1;
 	c->trans_matrix.array[2][2] = 1;
 	c->trans_matrix.array[3][3] = 1;
-	rotation_camera(c);
-	scale_and_translate(m, NULL, c);
-	// for(int i=0;i<4;i++)
-	// 	printf("%lf, %lf, %lf, %lf\n", c->trans_matrix.array[i][0], c->trans_matrix.array[i][1], c->trans_matrix.array[i][2], c->trans_matrix.array[i][3]);
-	// printf("\n");
+	// scale_and_translate(m, NULL, c);
+	scalar_op(&c->origin, &c->origin, '*', -1);
+	scalar_op(&c->orient, &c->origin, '*', -1);
+	get_up_vector(c);
+	camera_look_at(c);
+	// rotation_camera_z(c);
+	// rotation_camera_y(m, c);
+	assign(&c->orient, 0, 0, -1);
 }
 
 void	read_light_values(t_light *li, double *vals)
