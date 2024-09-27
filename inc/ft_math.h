@@ -42,11 +42,6 @@ double		magnitude(t_vector v);
 void		get_up_vector(t_camera *c);
 void		camera_look_at(t_camera *c);
 void		copy_vector(t_vector *v1, t_vector *v2);
-void		scale_and_translate(t_main *m, t_object *o, t_camera *c);
-void		rotation_object(t_object *o);
-void		rotation_camera_z(t_camera *c);
-void		rotation_camera_y(t_main *m, t_camera *c);
 void		transform_vector(t_matrix_2d *m, t_vector *v, int is_point);
-
 
 #endif

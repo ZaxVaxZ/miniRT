@@ -42,18 +42,11 @@ double	magnitude(t_vector v)
 void	get_up_vector(t_camera *c)
 {
 	t_vector	up;
-	// t_vector	right;
-	t_vector x = (t_vector){1, 0, 0, {0, 0, 0, 0}};
-	t_vector z = (t_vector){0, 0, 1, {0, 0, 0, 0}};
 
 	assign(&up, 0, 1, 0);
 	normalize(&c->orient);
 	cross_vector(&c->right, c->orient, up);
 	normalize(&c->right);
-	printf("right.up (0): %lf\n", dot(c->right, up));
-	printf("right.z (positive): %lf\n", dot(c->right, z));
-	printf("right.x (positive): %lf\n", dot(c->right, x));
 	cross_vector(&c->up, c->right, c->orient);
 	normalize(&c->up);
-	printf("cup.up (positive): %lf\n", dot(c->up, up));
 }

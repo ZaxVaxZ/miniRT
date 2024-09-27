@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/27 06:13:55 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/27 23:04:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,6 @@ void	free_matrix(t_matrix_2d *m);
 void	free_scene(t_scene s);
 void	free_double_array(double **arr);
 int		ft_malloc(void **pointer, int n, int size);
-double	**get_objs();
+double	**get_objs(void);
 
 #endif

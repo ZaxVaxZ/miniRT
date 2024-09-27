@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/25 05:17:50 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/27 23:09:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,3 @@ void	setup_scene(t_main *m, t_scene *s)
 		(m->vp_height / 2.0) - (s->camera.vp_v / 2.0),
 		-s->camera.focal_len);
 }
-
-// void	setup_transformation(t_main *m, t_scene *s)
-// {
-	
-// }

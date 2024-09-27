@@ -26,17 +26,11 @@ void	read_camera_values(t_main *m, t_camera *c, double *vals)
 	c->fov = vals[i++];
 	if (create_matrix(&c->trans_matrix, 4, 4))
 		free_and_exit(m, ERR_MEM, EXIT_FAILURE);
-	c->trans_matrix.array[0][0] = 1;
-	c->trans_matrix.array[1][1] = 1;
-	c->trans_matrix.array[2][2] = 1;
 	c->trans_matrix.array[3][3] = 1;
-	// scale_and_translate(m, NULL, c);
 	scalar_op(&c->origin, &c->origin, '*', -1);
 	scalar_op(&c->orient, &c->origin, '*', -1);
 	get_up_vector(c);
 	camera_look_at(c);
-	// rotation_camera_z(c);
-	// rotation_camera_y(m, c);
 	assign(&c->orient, 0, 0, -1);
 }
 
@@ -82,9 +76,6 @@ void	read_shape_values(t_main *m, t_object *o, double *vals)
 	o->trans_matrix.array[1][1] = 1;
 	o->trans_matrix.array[2][2] = 1;
 	o->trans_matrix.array[3][3] = 1;
-	if (o->object_type != SPHERE)
-		rotation_object(o);
-	scale_and_translate(m, o, NULL);
 }
 
 void	count_shapes(int count[4], double **objs)
