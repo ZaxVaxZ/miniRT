@@ -45,7 +45,10 @@ void	get_up_vector(t_camera *c)
 
 	assign(&up, 0, 1, 0);
 	normalize(&c->orient);
-	cross_vector(&c->right, c->orient, up);
+	if (is_equal(c->orient.x, 0) && is_equal(c->orient.z, 0))
+		assign(&c->right, 1, 0, 0);
+	else
+		cross_vector(&c->right, c->orient, up);
 	normalize(&c->right);
 	cross_vector(&c->up, c->right, c->orient);
 	normalize(&c->up);

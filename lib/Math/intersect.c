@@ -53,6 +53,7 @@ void	hit_plane(t_ray *ray, t_object *pl, t_hit *hit)
 	double		result;
 	double		denominator;
 
+	// transform_object(c, &sp);
 	denominator = dot(pl->orient, ray->orient);
 	if (denominator >= -1e-6 && denominator <= 1e-6)
 		return ;
