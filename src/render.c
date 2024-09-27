@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:28:33 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/27 23:10:47 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/27 23:25:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,16 @@ void	hit_objects(t_main *m, t_ray *ray, int i, int j)
 	hit.closest = -1;
 	u = -1;
 	while (++u < m->scene.co_cnt)
-		hit_cone(ray, &m->scene.cones[u], &hit);
+		hit_cone(&m->scene.camera, *ray, m->scene.cones[u], &hit);
 	u = -1;
 	while (++u < m->scene.sp_cnt)
 		hit_sphere(&m->scene.camera, *ray, m->scene.spheres[u], &hit);
 	u = -1;
 	while (++u < m->scene.pl_cnt)
-		hit_plane(ray, &m->scene.planes[u], &hit);
+		hit_plane(&m->scene.camera, *ray, m->scene.planes[u], &hit);
 	u = -1;
 	while (++u < m->scene.cy_cnt)
-		hit_cylinder(ray, &m->scene.cylinders[u], &hit);
+		hit_cylinder(&m->scene.camera, *ray, m->scene.cylinders[u], &hit);
 	if (hit.closest > -1)
 	{
 		(void)color_to_hex;

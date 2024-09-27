@@ -14,12 +14,17 @@
 
 #define BLACK	0,	   0,   0
 #define WHITE	255, 255, 255
+#define GRAY	120, 120, 120
 #define RED		255,   0,   0
+#define DARKRED	120,   0,   0
 #define GREEN	  0, 255,   0
+#define DARKGREEN 0, 120,   0
 #define BLUE	  0,   0, 255
+#define DARKBLUE  0,   0, 120
 #define CYAN	  0, 255, 255
 #define PINK	255,   32, 255
 #define YELLOW	255, 255,   0
+#define DARKY	120, 120,   0
 #define ORANGE	255, 100,   0
 #define BROWN	120,  40,   0
 #define PURPLE	180,   0, 180
@@ -29,11 +34,18 @@ double	**get_objs(void)
 	int		rows;
 	double	**ret;
 
-	rows = 13;
-	double arr[13][12] = 
-	{{CAMERA, 0,4, 0, 0, -4, 0, 100, 0,   0,   0,   0},
+	rows = 19;
+	double arr[19][12] = 
+	{{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
 	 {AMBIENT, 0, 0, 0, 0, 0, 0, 0, 0.2, 255, 255, 255},
 	 {LIGHT,   0, 0, 0, 0, 0, 0, 0.8, 0, 255, 255, 255},
+
+	 {PLANE, -4, 0, 0, 1, 0, 0, 0.5, 0, DARKGREEN},
+	 {PLANE, 0, 0, -4, 0, 0, 2, 0.5, 0, DARKRED},
+	 {PLANE, 0, -4, 0, 0, 1, 0, 0.5, 0, DARKBLUE},
+	 {PLANE, 4, 0, 0, -1, 0, 0, 0.5, 0, BROWN},
+	 {PLANE, 0, 0, 4, 0, 0, -2, 0.5, 0, GRAY},
+	 {PLANE, 0, 4, 0, 0, -1, 0, 0.5, 0, DARKY},
 
 	 {SPHERE, 1, 1, 1, 0, 0, 0, 0.5, 0, RED},
 	 {SPHERE, -1, 1, -1, 0, 0, 0, 0.5, 0, GREEN},
