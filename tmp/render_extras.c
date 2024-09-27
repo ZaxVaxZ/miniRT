@@ -51,7 +51,7 @@ double	**get_objs(void)
 	 {SPHERE, -1, 1, -1, 0, 0, 0, 0.5, 0, GREEN},
 	 {SPHERE, -1, 1, 1, 0, 0, 0, 0.5, 0, YELLOW},
 	 {SPHERE, 1, 1, -1, 0, 0, 0, 0.5, 0, BLUE},
-	 {SPHERE, 0, 0, 0, 0, 0, 0, 0.5, 0, WHITE},
+	 {CYLINDER, 0, 0, 0, 0, 1, 0, 0.5, 3, WHITE},
 	 {SPHERE, 1, -1, 1, 0, 0, 0, 0.5, 0, PINK},
 	 {SPHERE, -1, -1, -1, 0, 0, 0, 0.5, 0, ORANGE},
 	 {SPHERE, -1, -1, 1, 0, 0, 0, 0.5, 0, PURPLE},

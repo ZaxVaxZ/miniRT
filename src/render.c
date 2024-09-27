@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:28:33 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/27 23:25:12 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/28 01:00:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	hit_objects(t_main *m, t_ray *ray, int i, int j)
 		hit_cylinder(&m->scene.camera, *ray, m->scene.cylinders[u], &hit);
 	if (hit.closest > -1)
 	{
-		(void)color_to_hex;
 		color_pixel(m, i, j, color_to_hex(hit.color));
 	}
 }
