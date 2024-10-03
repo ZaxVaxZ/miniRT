@@ -21,7 +21,7 @@
 # define B 1
 # define C 2
 # define DISC 3
-# define RESULT 4
+# define RES 4
 
 t_matrix_2d	*cross_matrix(const t_matrix_2d *m1, const t_matrix_2d *m2);
 void		free_matrix(t_matrix_2d *m);
@@ -31,10 +31,10 @@ void		cross_vector(t_vector *result, t_vector v1, t_vector v2);
 void		scalar_op(t_vector *res, t_vector *v, char op, double value);
 void		vector_op(t_vector *res, t_vector *v1, char op, t_vector *v2);
 void		assign(t_vector *v, double x, double y, double z);
-void		hit_sphere(t_camera *c, t_ray ray, t_object sp, t_hit *hit);
-void		hit_cylinder(t_camera *c, t_ray ray, t_object cy, t_hit *hit);
-void		hit_cone(t_camera *c, t_ray ray, t_object co, t_hit *hit);
-void		hit_plane(t_camera *c, t_ray ray, t_object pl, t_hit *hit);
+void		hit_sphere(t_ray ray, t_object sp, t_hit *hit);
+void		hit_cylinder(t_ray ray, t_object cy, t_hit *hit);
+void		hit_cone(t_ray ray, t_object co, t_hit *hit);
+void		hit_plane(t_ray ray, t_object pl, t_hit *hit);
 void		normalize(t_vector *v);
 int			is_equal(double x, double y);
 double		dot(t_vector v1, t_vector v2);

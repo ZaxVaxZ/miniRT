@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:28:33 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/28 01:00:34 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/03 04:19:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,16 @@ void	hit_objects(t_main *m, t_ray *ray, int i, int j)
 	hit.closest = -1;
 	u = -1;
 	while (++u < m->scene.co_cnt)
-		hit_cone(&m->scene.camera, *ray, m->scene.cones[u], &hit);
+		hit_cone(*ray, m->scene.cones[u], &hit);
 	u = -1;
 	while (++u < m->scene.sp_cnt)
-		hit_sphere(&m->scene.camera, *ray, m->scene.spheres[u], &hit);
+		hit_sphere(*ray, m->scene.spheres[u], &hit);
 	u = -1;
 	while (++u < m->scene.pl_cnt)
-		hit_plane(&m->scene.camera, *ray, m->scene.planes[u], &hit);
+		hit_plane(*ray, m->scene.planes[u], &hit);
 	u = -1;
 	while (++u < m->scene.cy_cnt)
-		hit_cylinder(&m->scene.camera, *ray, m->scene.cylinders[u], &hit);
+		hit_cylinder(*ray, m->scene.cylinders[u], &hit);
 	if (hit.closest > -1)
 	{
 		color_pixel(m, i, j, color_to_hex(hit.color));
@@ -109,12 +109,12 @@ void	render_scene(t_main *m)
 		return ;
 	m->busy = 1;
 	i = -1;
+	copy_vector(&ray.origin, &m->scene.camera.origin);
 	while (++i < m->win_height)
 	{
 		j = -1;
 		while (++j < m->win_width)
 		{
-			copy_vector(&ray.origin, &m->scene.camera.origin);
 			copy_vector(&ray.orient, &m->scene.camera.top_left_pos);
 			ray.orient.x += j * m->scene.camera.vp_u;
 			ray.orient.y -= i * m->scene.camera.vp_v;

@@ -34,21 +34,16 @@ void	copy_vector(t_vector *v1, t_vector *v2)
 	v1->z = v2->z;
 }
 
-double	magnitude(t_vector v)
-{
-	return (sqrt(dot(v, v)));
-}
-
 void	get_up_vector(t_camera *c)
 {
-	t_vector	up;
+	t_vector	world_up;
 
-	assign(&up, 0, 1, 0);
+	assign(&world_up, 0, 1, 0);
 	normalize(&c->orient);
 	if (is_equal(c->orient.x, 0) && is_equal(c->orient.z, 0))
 		assign(&c->right, 1, 0, 0);
 	else
-		cross_vector(&c->right, c->orient, up);
+		cross_vector(&c->right, c->orient, world_up);
 	normalize(&c->right);
 	cross_vector(&c->up, c->right, c->orient);
 	normalize(&c->up);

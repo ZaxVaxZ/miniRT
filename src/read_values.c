@@ -28,13 +28,13 @@ void	read_camera_values(t_main *m, t_camera *c, double *vals)
 		free_and_exit(m, ERR_MEM, EXIT_FAILURE);
 	c->trans_matrix.array[3][3] = 1;
 	scalar_op(&c->origin, &c->origin, '*', -1);
-	scalar_op(&c->orient, &c->origin, '*', -1);
+	scalar_op(&c->orient, &c->orient, '*', -1);
 	get_up_vector(c);
 	camera_look_at(c);
 	assign(&c->orient, 0, 0, -1);
 }
 
-void	read_light_values(t_light *li, double *vals)
+void	read_light_values(t_main *m, t_light *li, double *vals)
 {
 	int	i;
 
@@ -49,6 +49,7 @@ void	read_light_values(t_light *li, double *vals)
 	li->color.x = vals[i++];
 	li->color.y = vals[i++];
 	li->color.z = vals[i++];
+	transform_vector(&m->scene.camera.trans_matrix, &li->origin, 1);
 }
 
 void	read_shape_values(t_main *m, t_object *o, double *vals)
@@ -76,6 +77,8 @@ void	read_shape_values(t_main *m, t_object *o, double *vals)
 	o->trans_matrix.array[1][1] = 1;
 	o->trans_matrix.array[2][2] = 1;
 	o->trans_matrix.array[3][3] = 1;
+	transform_vector(&m->scene.camera.trans_matrix, &o->origin, 1);
+	transform_vector(&m->scene.camera.trans_matrix, &o->orient, 0);
 }
 
 void	count_shapes(int count[4], double **objs)

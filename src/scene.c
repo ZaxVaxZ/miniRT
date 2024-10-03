@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/27 23:09:24 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/28 10:19:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	init_scene(t_main *m, t_scene *s, double **objs)
 		if (is_equal(objs[i][0], CAMERA))
 			read_camera_values(m, &s->camera, objs[i]);
 		if (is_equal(objs[i][0], AMBIENT))
-			read_light_values(&s->ambient, objs[i]);
+			read_light_values(m, &s->ambient, objs[i]);
 		if (is_equal(objs[i][0], LIGHT))
-			read_light_values(&s->light, objs[i]);
+			read_light_values(m, &s->light, objs[i]);
 	}
 }
 

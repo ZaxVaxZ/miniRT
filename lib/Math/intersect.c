@@ -19,43 +19,39 @@ static double	solve_quadratic(double vals[5])
 	vals[DISC] = vals[B] * vals[B] - 4.0 * vals[A] * vals[C];
 	if (vals[DISC] < 0 || !vals[A])
 		return (-1);
-	vals[RESULT] = (-vals[B] - sqrt(vals[DISC])) / (2 * vals[A]);
+	vals[RES] = (-vals[B] - sqrt(vals[DISC])) / (2 * vals[A]);
 	tmp = (-vals[B] + sqrt(vals[DISC])) / (2 * vals[A]);
-	if (vals[RESULT] <= 0 || tmp < vals[RESULT])
-		vals[RESULT] = tmp;
-	return (vals[RESULT]);
+	if (vals[RES] <= 0 || tmp < vals[RES])
+		vals[RES] = tmp;
+	return (vals[RES]);
 }
 
-void	hit_sphere(t_camera *c, t_ray ray, t_object sp, t_hit *hit)
+void	hit_sphere(t_ray ray, t_object sp, t_hit *hit)
 {
 	double		vals[5];
-	t_vector	C_Q;
+	t_vector	c_q;
 
-	transform_vector(&c->trans_matrix, &sp.origin, 1);
 	vals[A] = dot(ray.orient, ray.orient);
-	vector_op(&C_Q, &sp.origin, '-', &ray.origin);
-	vals[B] = -2.0 * dot(ray.orient, C_Q);
-	vals[C] = dot(C_Q, C_Q) - sp.radius * sp.radius;
-	vals[RESULT] = solve_quadratic(vals);
-	if (vals[RESULT] >= 0 && (hit->closest == -1 || vals[RESULT] < hit->closest))
+	vector_op(&c_q, &sp.origin, '-', &ray.origin);
+	vals[B] = -2.0 * dot(ray.orient, c_q);
+	vals[C] = dot(c_q, c_q) - sp.radius * sp.radius;
+	vals[RES] = solve_quadratic(vals);
+	if (vals[RES] >= 0 && (hit->closest == -1 || vals[RES] < hit->closest))
 	{
-		hit->closest = vals[RESULT];
-		scalar_op(&hit->hitp, &ray.orient, '*', vals[RESULT]);
+		hit->closest = vals[RES];
+		scalar_op(&hit->hitp, &ray.orient, '*', vals[RES]);
 		vector_op(&hit->hitp, &ray.orient, '+', &ray.origin);
 		copy_vector(&hit->color, &sp.color);
 		vector_op(&hit->normal, &hit->hitp, '-', &sp.origin);
-		normalize(&hit->normal);
 	}
 }
 
-void	hit_plane(t_camera *c, t_ray ray, t_object pl, t_hit *hit)
+void	hit_plane(t_ray ray, t_object pl, t_hit *hit)
 {
 	t_vector	tmp;
 	double		result;
 	double		denominator;
 
-	transform_vector(&c->trans_matrix, &pl.origin, 1);
-	transform_vector(&c->trans_matrix, &pl.orient, 0);
 	denominator = dot(pl.orient, ray.orient);
 	if (denominator >= -1e-6 && denominator <= 1e-6)
 		return ;
@@ -63,57 +59,96 @@ void	hit_plane(t_camera *c, t_ray ray, t_object pl, t_hit *hit)
 	result = dot(tmp, pl.orient) / denominator;
 	if (result < 1e-6)
 		return ;
-	if (hit->closest == -1 || result < hit->closest)
+	if (result >= 0 && (hit->closest == -1 || result < hit->closest))
 	{
 		hit->closest = result;
 		scalar_op(&hit->hitp, &ray.orient, '*', result);
 		vector_op(&hit->hitp, &ray.orient, '+', &ray.origin);
 		copy_vector(&hit->color, &pl.color);
 		copy_vector(&hit->normal, &pl.orient);
+		if (dot(ray.orient, pl.orient) < 0)
+			scalar_op(&hit->normal, &hit->normal, '*', -1);
 	}
 }
 
-void	hit_cylinder(t_camera *c, t_ray ray, t_object cy, t_hit *hit)
+void	hit_cylinder(t_ray ray, t_object cy, t_hit *hit)
 {
 	double		vals[5];
 	t_vector	cy_right;
-	t_vector	C_Q;
+	t_vector	c_q;
 
-	transform_vector(&c->trans_matrix, &cy.origin, 1);
-	transform_vector(&c->trans_matrix, &cy.orient, 0);
 	cross_vector(&cy_right, ray.orient, cy.orient);
-	vector_op(&C_Q, &cy.origin, '-', &ray.origin);
-	cross_vector(&C_Q, C_Q, cy.orient);
+	vector_op(&c_q, &cy.origin, '-', &ray.origin);
+	cross_vector(&c_q, c_q, cy.orient);
 	vals[A] = dot(cy_right, cy_right);
-	vals[B] = -2 * dot(cy_right, C_Q);
-	vals[C] = dot(C_Q, C_Q) - cy.radius * cy.radius;
-	vals[RESULT] = solve_quadratic(vals);
-	if (vals[RESULT] >= 0 && (hit->closest == -1 || vals[RESULT] < hit->closest))
+	vals[B] = -2 * dot(cy_right, c_q);
+	vals[C] = dot(c_q, c_q) - cy.radius * cy.radius;
+	vals[RES] = solve_quadratic(vals);
+	if (vals[RES] >= 0 && (hit->closest == -1 || vals[RES] < hit->closest))
 	{
-		hit->closest = vals[RESULT];
-		scalar_op(&hit->hitp, &ray.orient, '*', vals[RESULT]);
+		hit->closest = vals[RES];
+		scalar_op(&hit->hitp, &ray.orient, '*', vals[RES]);
 		vector_op(&hit->hitp, &ray.orient, '+', &ray.origin);
 		copy_vector(&hit->color, &cy.color);
-		cross_vector(&hit->normal, C_Q, cy.orient);
+		cross_vector(&hit->normal, c_q, cy.orient);
 		cross_vector(&hit->normal, hit->normal, cy.orient);
 		normalize(&hit->normal);
 	}
 }
 
-void	hit_cone(t_camera *c, t_ray ray, t_object co, t_hit *hit)
+void	hit_cone(t_ray ray, t_object co, t_hit *hit)
 {
 	double		vals[5];
-	t_vector	C_Q;
+	t_vector	c_q;
 
-	transform_vector(&c->trans_matrix, &co.origin, 1);
-	transform_vector(&c->trans_matrix, &co.orient, 0);
 	vals[A] = dot(ray.orient, ray.orient);
-	vector_op(&C_Q, &co.origin, '-', &ray.origin);
-	vals[B] = 2 * dot(ray.orient, C_Q);
-	vals[C] = dot(C_Q, C_Q) - co.radius * co.radius;
-	vals[RESULT] = solve_quadratic(vals);
-	if (hit->closest == -1 || vals[RESULT] < hit->closest)
+	vector_op(&c_q, &co.origin, '-', &ray.origin);
+	vals[B] = 2 * dot(ray.orient, c_q);
+	vals[C] = dot(c_q, c_q) - co.radius * co.radius;
+	vals[RES] = solve_quadratic(vals);
+	if (hit->closest == -1 || vals[RES] < hit->closest)
 	{
-		hit->closest = vals[RESULT];
+		hit->closest = vals[RES];
 	}
 }
+
+// void	hit_sphere(t_ray ray, t_object sp, t_hit *hit)
+// {
+// 	double		vals[5];
+// 	t_vector	c_q;
+// 	static int i=0;
+// 	if (is_equal(sp.origin.x, 0) && is_equal(sp.origin.y, 0) && !i)
+// 	{
+// 		printf("%lf, %lf, %lf\n", sp.color.x, sp.color.y, sp.color.z);
+// 	}
+// (void)c;
+// 	vals[A] = dot(ray.orient, ray.orient);
+// 	vector_op(&c_q, &sp.origin, '-', &ray.origin);
+// 	vals[B] = -2.0 * dot(ray.orient, c_q);
+// 	vals[C] = dot(c_q, c_q) - sp.radius * sp.radius;
+// 	vals[RES] = solve_quadratic(vals);
+// 	// if (vals[RES] >= 0 && is_equal(sp.origin.x, 0)
+// && is_equal(sp.origin.y, 0) 
+// && ray.orient.y >= -1e-3 && ray.orient.y <= 1e-3
+// && ray.orient.x >= -1e-3 && ray.orient.x <= 1e-3)
+// 	// {
+// 	// 	printf("%lf\n", vals[RES]);
+// 	// }
+// 	i++;
+// 	if (vals[RES] >= 0
+// && (hit->closest == -1 || vals[RES] < hit->closest))
+// 	{
+// 		hit->closest = vals[RES];
+// 		scalar_op(&hit->hitp, &ray.orient, '*', vals[RES]);
+// 		vector_op(&hit->hitp, &ray.orient, '+', &ray.origin);
+// 		copy_vector(&hit->color, &sp.color);
+// 		vector_op(&hit->normal, &hit->hitp, '-', &sp.origin);
+// 		// normalize(&hit->normal);
+// 		if (hit->i % 100 == 0 && hit->j % 100 == 0
+// && !is_equal(dot(hit->normal, hit->normal), sp.radius * sp.radius))
+// 		printf("%lf, %lf\n", sp.radius, sqrt(dot(hit->normal, hit->normal)));
+// 		// // normalize(&hit->normal);
+// 		// // if (dot(ray.orient, hit->normal) < 0)
+// 		// // 	scalar_op(&hit->normal, &hit->normal, '*', -1);
+// 	}
+// }

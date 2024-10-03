@@ -17,11 +17,12 @@
 #define GRAY	120, 120, 120
 #define RED		255,   0,   0
 #define DARKRED	120,   0,   0
-#define GREEN	  0, 255,   0
+#define GREEN	  0, 205,   0
 #define DARKGREEN 0, 120,   0
 #define BLUE	  0,   0, 255
 #define DARKBLUE  0,   0, 120
 #define CYAN	  0, 255, 255
+#define OILY	 60, 255, 90
 #define PINK	255,   32, 255
 #define YELLOW	255, 255,   0
 #define DARKY	120, 120,   0
@@ -34,28 +35,32 @@ double	**get_objs(void)
 	int		rows;
 	double	**ret;
 
-	rows = 19;
-	double arr[19][12] = 
-	{{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
-	 {AMBIENT, 0, 0, 0, 0, 0, 0, 0, 0.2, 255, 255, 255},
-	 {LIGHT,   0, 0, 0, 0, 0, 0, 0.8, 0, 255, 255, 255},
+	double sr=1;
+	double pl=4;
+	rows = 18;
+	double arr[18][12] = 
+	{{CAMERA, -3,-3, -3, 4, 4, 4, 100, 0,   0,   0,   0},
+	// {{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
+	// {{CAMERA, 0,0, -3, 0, 0, 1, 100, 0,   0,   0,   0},
 
-	 {PLANE, -4, 0, 0, 1, 0, 0, 0.5, 0, DARKGREEN},
-	 {PLANE, 0, 0, -4, 0, 0, 2, 0.5, 0, DARKRED},
-	 {PLANE, 0, -4, 0, 0, 1, 0, 0.5, 0, DARKBLUE},
-	 {PLANE, 4, 0, 0, -1, 0, 0, 0.5, 0, BROWN},
-	 {PLANE, 0, 0, 4, 0, 0, -2, 0.5, 0, GRAY},
-	 {PLANE, 0, 4, 0, 0, -1, 0, 0.5, 0, DARKY},
+	 {AMBIENT, 0, 0, 0, 0, 0, 0, 0.2, 0, 255, 255, 255},
 
-	 {SPHERE, 1, 1, 1, 0, 0, 0, 0.5, 0, RED},
-	 {SPHERE, -1, 1, -1, 0, 0, 0, 0.5, 0, GREEN},
-	 {SPHERE, -1, 1, 1, 0, 0, 0, 0.5, 0, YELLOW},
-	 {SPHERE, 1, 1, -1, 0, 0, 0, 0.5, 0, BLUE},
-	 {CYLINDER, 0, 0, 0, 0, 1, 0, 0.5, 3, WHITE},
-	 {SPHERE, 1, -1, 1, 0, 0, 0, 0.5, 0, PINK},
-	 {SPHERE, -1, -1, -1, 0, 0, 0, 0.5, 0, ORANGE},
-	 {SPHERE, -1, -1, 1, 0, 0, 0, 0.5, 0, PURPLE},
-	 {SPHERE, 1, -1, -1, 0, 0, 0, 0.5, 0, CYAN},
+	 {PLANE, -pl, 0, 0, 1, 0, 0, 0.5, 0, DARKGREEN},
+	 {PLANE, 0, 0, -pl, 0, 0, 2, 0.5, 0, DARKRED},
+	 {PLANE, 0, -pl, 0, 0, 1, 0, 0.5, 0, DARKBLUE},
+	 {PLANE, pl, 0, 0, -1, 0, 0, 0.5, 0, BROWN},
+	 {PLANE, 0, 0, pl, 0, 0, -2, 0.5, 0, GRAY},
+	 {PLANE, 0, pl, 0, 0, -1, 0, 0.5, 0, DARKY},
+
+	 {SPHERE, sr, sr, sr, 0, 0, 0, 0.9, 0, RED},
+	 {SPHERE, -sr, sr, -sr, 0, 0, 0, 0.9, 0, GREEN},
+	 {SPHERE, -sr, sr, sr, 0, 0, 0, 0.9, 0, YELLOW},
+	 {SPHERE, sr, sr, -sr, 0, 0, 0, 0.9, 0, BLUE},
+	 {CYLINDER, 0, 0, 0, 0, 1, 0, 0.5, 8, WHITE},
+	 {SPHERE, sr, -sr, sr, 0, 0, 0, 0.9, 0, PINK},
+	 {SPHERE, -sr, -sr, -sr, 0, 0, 0, 0.9, 0, PURPLE},
+	 {SPHERE, -sr, -sr, sr, 0, 0, 0, 0.9, 0, OILY},
+	 {SPHERE, sr, -sr, -sr, 0, 0, 0, 0.9, 0, CYAN},
 	 
 	 {INVALID, 0, 0, 0, 0, 0, 0,   0, 0,   0,   0,   0}
 	};
