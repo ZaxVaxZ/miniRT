@@ -6,13 +6,11 @@
 /*   By: ffidha <ffidha@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 23:05:30 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/04 13:19:57 by ffidha           ###   ########.fr       */
+/*   Updated: 2024/10/05 11:28:21 by ffidha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/general.h"
-#include "../inc/get_next_line.h"
-#include "../inc/libft.h"
+#include "../inc/parser.h"
 
 int	count_objects(int fd)
 {
@@ -50,24 +48,41 @@ double	**allocate_scene_array(int object_count)
 	return (scene_arr);
 }
 
-int	find_scene(t_main *m, char *line)
+// int	find_scene(t_main *m, double **scene_arr, char *line)
+// {
+// 	if (ft_strncmp(line, "A", 1) == 0)
+// 		ambient(m, scene_arr, 12);
+// 	else if (ft_strncmp(line, "C", 1) == 0)
+// 		camera(m, scene_arr, 12);
+// 	else if (ft_strncmp(line, "L", 1) == 0)
+// 		light(m, scene_arr, 12);
+// 	else if (ft_strncmp(line, "cy", 1) == 0)
+// 		cylinder(m, scene_arr, 12);
+// 	else if (ft_strncmp(line, "co", 1) == 0)
+// 		cone(m, scene_arr, 12);
+// 	else if (ft_strncmp(line, "sp", 1) == 0)
+// 		sphere(m, scene_arr, 12);
+// 	else if (ft_strncmp(line, "pl", 1) == 0)
+// 		plane(m, scene_arr, 12);
+// 	return (0);
+// }
+
+int read_file(char *line, double **scene_arr)
 {
-	(void)m;
-	(void)line;
 	if (ft_strncmp(line, "A", 1) == 0)
-		ambient(m, line);
+		ambient(line, scene_arr, 12);
 	else if (ft_strncmp(line, "C", 1) == 0)
-		camera(m, line);
+		camera(line, scene_arr, 12);
 	else if (ft_strncmp(line, "L", 1) == 0)
-		light(m, line);
+		light(line, scene_arr, 12);
 	else if (ft_strncmp(line, "cy", 1) == 0)
-		cylinder(m, line);
+		cylinder(line, scene_arr, 12);
 	else if (ft_strncmp(line, "co", 1) == 0)
-		cone(m, line);
+		cone(line, scene_arr, 12);
 	else if (ft_strncmp(line, "sp", 1) == 0)
-		sphere(m, line);
+		sphere(line, scene_arr, 12);
 	else if (ft_strncmp(line, "pl", 1) == 0)
-		plane(m, line);
+		plane(line, scene_arr, 12);
 	return (0);
 }
 
@@ -108,5 +123,6 @@ int	open_file(t_main *m, char *file)
 	if (fd < 0)
 		free_and_exit(m, "File not found on second open", EXIT_FAILURE);
 	close(fd);
+	read_file(file, scene_arr);
 	return (0);
 }
