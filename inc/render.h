@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:29:33 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/22 03:11:09 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/05 02:15:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "general.h"
 # include "ft_math.h"
+# include "scene.h"
 # include "mlx.h"
 
 void	color_pixel(t_main *m, int x, int y, unsigned int color);

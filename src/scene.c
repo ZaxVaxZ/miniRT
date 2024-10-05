@@ -6,27 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/28 10:19:08 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/05 21:24:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
-
-static void	create_shapes_arr(t_main *m, void **arr_pointer, int cnt, int shape)
-{
-	int	i;
-
-	if (cnt == 0)
-	{
-		*arr_pointer = NULL;
-		return ;
-	}
-	if (ft_malloc(arr_pointer, cnt, sizeof(t_object)))
-		free_and_exit(m, ERR_MEM, EXIT_FAILURE);
-	i = -1;
-	while (++i < cnt)
-		(*((t_object **)arr_pointer))[i].object_type = shape;
-}
 
 static void	setup_shapes(t_main *m, int cnt[4])
 {
@@ -80,4 +64,31 @@ void	setup_scene(t_main *m, t_scene *s)
 		-(m->vp_width / 2.0) + (s->camera.vp_u / 2.0),
 		(m->vp_height / 2.0) - (s->camera.vp_v / 2.0),
 		-s->camera.focal_len);
+}
+
+int	interrupted(t_main *m, t_hit *h)
+{
+	int		u;
+	t_ray	ray;
+	t_hit	hit;
+
+	copy_vector(&ray.origin, &h->hitp);
+	vector_op(&ray.orient, &m->scene.light.origin, '-', &h->hitp);
+	normalize(&ray.orient);
+	u = 0;
+	while (u < m->scene.sp_cnt || u < m->scene.pl_cnt
+		|| u < m->scene.cy_cnt || u < m->scene.co_cnt)
+	{
+		if (u < m->scene.sp_cnt && hit_sphere(ray, m->scene.spheres[u], &hit))
+			return (1);
+		if (u < m->scene.pl_cnt && hit_plane(ray, m->scene.planes[u], &hit))
+			return (1);
+		if (u < m->scene.cy_cnt
+			&& hit_cylinder(ray, m->scene.cylinders[u], &hit))
+			return (1);
+		if (u < m->scene.co_cnt && hit_cone(ray, m->scene.cones[u], &hit))
+			return (1);
+		u++;
+	}
+	return (0);
 }

@@ -3,7 +3,7 @@ CFLAGS = -Iinc -Wall -Wextra -Werror -fsanitize=address,undefined -g3
 NAME = miniRT
 
 LIBFT_DIR = ./lib/Libft/
-LIBFT_SRC = ft_strlen.c ft_atoi.c ft_strncmp.c ft_strtrim.c ft_strdup.c ft_substr.c
+LIBFT_SRC = ft_strlen.c ft_atoi.c
 SRCS += $(addprefix $(LIBFT_DIR), $(LIBFT_SRC))
 
 GNL_DIR = ./lib/get_next_line/
@@ -19,9 +19,9 @@ TMP_SRC = render_extras.c
 SRCS += $(addprefix $(TMP_DIR), $(TMP_SRC))
 
 SRC_DIR = ./src/
-CFILES = miniRT.c render.c hooks.c free.c scene.c read_values.c parser.c parse_objs.c parse_utils.c parse_shapes.c
-
+CFILES = miniRT.c render.c hooks.c free.c scene.c read_values.c
 SRCS += $(addprefix $(SRC_DIR), $(CFILES))
+
 OBJS = $(SRCS:.c=.o)
 OS := $(shell uname)
 ifeq ($(OS),Linux)

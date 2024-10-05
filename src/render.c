@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:28:33 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/03 04:19:37 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/05 02:24:22 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,29 +57,37 @@ static unsigned int	color_to_hex(t_color color)
 
 void	light_up(t_main *m, t_hit *hit)
 {
-	double		light;
 	double		li_dot;
+	t_vector	light;
 	t_vector	to_light;
 
-	if (!m || !hit)
-		return ;
-	light = m->scene.ambient.brightness;
+	assign(&light, 0, 0, 0);
+	scalar_op(&light, &light, '+', m->scene.ambient.brightness);
 	vector_op(&to_light, &m->scene.light.origin, '-', &hit->hitp);
 	li_dot = dot(to_light, hit->normal);
-	if (li_dot > 0)
-		light += m->scene.light.brightness * li_dot
+	if (li_dot > 0 && !interrupted(m, hit))
+	{
+		light.x += m->scene.light.brightness * li_dot
+			* (m->scene.light.color.x / 255)
 			/ (sqrt(dot(hit->normal, hit->normal))
 				* sqrt(dot(to_light, to_light)));
-	scalar_op(&hit->color, &hit->color, '*', light);
+		light.y += m->scene.light.brightness * li_dot
+			* (m->scene.light.color.y / 255)
+			/ (sqrt(dot(hit->normal, hit->normal))
+				* sqrt(dot(to_light, to_light)));
+		light.z += m->scene.light.brightness * li_dot
+			* (m->scene.light.color.z / 255)
+			/ (sqrt(dot(hit->normal, hit->normal))
+				* sqrt(dot(to_light, to_light)));
+	}
+	vector_op(&hit->color, &hit->color, '*', &light);
 }
 
-void	hit_objects(t_main *m, t_ray *ray, int i, int j)
+static int	hit_objects(t_main *m, t_ray *ray, int i, int j)
 {
 	int		u;
 	t_hit	hit;
 
-	hit.i = i;
-	hit.j = j;
 	hit.closest = -1;
 	u = -1;
 	while (++u < m->scene.co_cnt)
@@ -95,8 +103,11 @@ void	hit_objects(t_main *m, t_ray *ray, int i, int j)
 		hit_cylinder(*ray, m->scene.cylinders[u], &hit);
 	if (hit.closest > -1)
 	{
+		light_up(m, &hit);
 		color_pixel(m, i, j, color_to_hex(hit.color));
+		return (1);
 	}
+	return (0);
 }
 
 void	render_scene(t_main *m)

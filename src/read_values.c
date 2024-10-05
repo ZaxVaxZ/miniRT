@@ -99,3 +99,19 @@ void	count_shapes(int count[4], double **objs)
 		count[CYLINDER] += is_equal(objs[i][0], CYLINDER);
 	}
 }
+
+void	create_shapes_arr(t_main *m, void **arr_pointer, int cnt, int shape)
+{
+	int	i;
+
+	if (cnt == 0)
+	{
+		*arr_pointer = NULL;
+		return ;
+	}
+	if (ft_malloc(arr_pointer, cnt, sizeof(t_object)))
+		free_and_exit(m, ERR_MEM, EXIT_FAILURE);
+	i = -1;
+	while (++i < cnt)
+		(*((t_object **)arr_pointer))[i].object_type = shape;
+}

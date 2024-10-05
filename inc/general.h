@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/27 23:04:26 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/05 02:24:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,10 @@ typedef struct s_ray
 
 typedef struct s_hit
 {
-	int			i;
-	int			j;
 	double		closest;
 	t_color		color;
 	t_vector	normal;
 	t_point		hitp;
-	t_object	*obj;
 }	t_hit;
 
 typedef struct s_scene

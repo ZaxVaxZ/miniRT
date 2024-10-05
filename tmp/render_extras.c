@@ -14,20 +14,21 @@
 
 #define BLACK	0,	   0,   0
 #define WHITE	255, 255, 255
-#define GRAY	120, 120, 120
+#define GRAY	 80,  80,  80
 #define RED		255,   0,   0
-#define DARKRED	120,   0,   0
+#define DARKRED	 80,   0,   0
 #define GREEN	  0, 205,   0
-#define DARKGREEN 0, 120,   0
+#define DARKGREEN 0,  80,   0
 #define BLUE	  0,   0, 255
-#define DARKBLUE  0,   0, 120
+#define DARKBLUE  0,   0,  80
 #define CYAN	  0, 255, 255
-#define OILY	 60, 255, 90
-#define PINK	255,   32, 255
+#define OILY	 60, 255,  90
+#define PINK	255,  32, 255
 #define YELLOW	255, 255,   0
-#define DARKY	120, 120,   0
+#define MAGENTA	255,   0, 255
+#define DARKY	 80,  80,   0
 #define ORANGE	255, 100,   0
-#define BROWN	120,  40,   0
+#define BROWN	 80,  40,   0
 #define PURPLE	180,   0, 180
 
 double	**get_objs(void)
@@ -35,12 +36,42 @@ double	**get_objs(void)
 	int		rows;
 	double	**ret;
 
+	// double sr=1;
+	// double pl=4;
+	// rows = 16;
+	// double arr[16][12] = 
+	// // {{CAMERA, -3,-3, -3, 4, 4, 4, 100, 0,   0,   0,   0},
+	// {{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
+	// // {{CAMERA, 0,0, -3, 0, 0, 1, 100, 0,   0,   0,   0},
+
+	//  {AMBIENT, 0, 0, 0, 0, 0, 0, 0.2, 0, 255, 255, 255},
+
+	//  {PLANE, -pl, 0, 0, 1, 0, 0, 0.5, 0, DARKGREEN},
+	//  {PLANE, 0, 0, -pl, 0, 0, 2, 0.5, 0, DARKRED},
+	//  {PLANE, 0, -pl, 0, 0, 1, 0, 0.5, 0, DARKBLUE},
+	//  {PLANE,  pl, 0, 0, 1, 0, 0, 0.5, 0, BROWN},
+	//  {PLANE, 0, 0,  pl, 0, 0, 2, 0.5, 0, GRAY},
+	//  {PLANE, 0,  pl, 0, 0, 1, 0, 0.5, 0, DARKY},
+
+	//  {SPHERE,   0,  sr,   0, 0, 1, 0, 0.9, 1, BLUE},
+	//  {SPHERE,   0, -sr,   0, 0, 1, 0, 0.9, 1, GREEN},
+	//  {SPHERE,  sr,   0,   0, 0, 1, 0, 0.9, 1, YELLOW},
+	//  {SPHERE, -sr,   0,   0, 0, 1, 0, 0.9, 1, RED},
+	//  {SPHERE,   0,   0,  sr, 0, 0, 0, 0.9, 0, MAGENTA},
+	//  {SPHERE,   0,   0, -sr, 0, 0, 0, 0.9, 0, PURPLE},
+	//  { LIGHT,   0,   0,   0, 0, 1, 0, 1.5, 8, WHITE},
+	 
+	//  {INVALID, 0, 0, 0, 0, 0, 0,   0, 0,   0,   0,   0}
+	// };
+
+
+	
 	double sr=1;
 	double pl=4;
 	rows = 18;
 	double arr[18][12] = 
-	{{CAMERA, -3,-3, -3, 4, 4, 4, 100, 0,   0,   0,   0},
-	// {{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
+	// {{CAMERA, -3,-3, -3, 4, 4, 4, 100, 0,   0,   0,   0},
+	{{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
 	// {{CAMERA, 0,0, -3, 0, 0, 1, 100, 0,   0,   0,   0},
 
 	 {AMBIENT, 0, 0, 0, 0, 0, 0, 0.2, 0, 255, 255, 255},
@@ -48,22 +79,52 @@ double	**get_objs(void)
 	 {PLANE, -pl, 0, 0, 1, 0, 0, 0.5, 0, DARKGREEN},
 	 {PLANE, 0, 0, -pl, 0, 0, 2, 0.5, 0, DARKRED},
 	 {PLANE, 0, -pl, 0, 0, 1, 0, 0.5, 0, DARKBLUE},
-	 {PLANE, pl, 0, 0, -1, 0, 0, 0.5, 0, BROWN},
-	 {PLANE, 0, 0, pl, 0, 0, -2, 0.5, 0, GRAY},
-	 {PLANE, 0, pl, 0, 0, -1, 0, 0.5, 0, DARKY},
+	 {PLANE,  pl, 0, 0, 1, 0, 0, 0.5, 0, BROWN},
+	 {PLANE, 0, 0,  pl, 0, 0, 2, 0.5, 0, GRAY},
+	 {PLANE, 0,  pl, 0, 0, 1, 0, 0.5, 0, DARKY},
 
-	 {SPHERE, sr, sr, sr, 0, 0, 0, 0.9, 0, RED},
-	 {SPHERE, -sr, sr, -sr, 0, 0, 0, 0.9, 0, GREEN},
-	 {SPHERE, -sr, sr, sr, 0, 0, 0, 0.9, 0, YELLOW},
-	 {SPHERE, sr, sr, -sr, 0, 0, 0, 0.9, 0, BLUE},
-	 {CYLINDER, 0, 0, 0, 0, 1, 0, 0.5, 8, WHITE},
-	 {SPHERE, sr, -sr, sr, 0, 0, 0, 0.9, 0, PINK},
+	 {SPHERE,  sr,  sr,  sr, 0, 1, 0, 0.9, 1, BLUE},
+	 {SPHERE, -sr,  sr, -sr, 0, 1, 0, 0.9, 1, GREEN},
+	 {SPHERE, -sr,  sr,  sr, 0, 1, 0, 0.9, 1, YELLOW},
+	 {SPHERE,  sr,  sr, -sr, 0, 1, 0, 0.9, 1, RED},
+	 { LIGHT,   0,   0,   0, 0, 1, 0, 1.5, 8, WHITE},
+	 {SPHERE,  sr, -sr,  sr, 0, 0, 0, 0.9, 0, MAGENTA},
 	 {SPHERE, -sr, -sr, -sr, 0, 0, 0, 0.9, 0, PURPLE},
-	 {SPHERE, -sr, -sr, sr, 0, 0, 0, 0.9, 0, OILY},
-	 {SPHERE, sr, -sr, -sr, 0, 0, 0, 0.9, 0, CYAN},
+	 {SPHERE, -sr, -sr,  sr, 0, 0, 0, 0.9, 0, OILY},
+	 {SPHERE,  sr, -sr, -sr, 0, 0, 0, 0.9, 0, CYAN},
 	 
 	 {INVALID, 0, 0, 0, 0, 0, 0,   0, 0,   0,   0,   0}
 	};
+
+
+
+	// rows = 11;
+	// double arr[11][12] = 
+	// // {{CAMERA, -3,-3, -3, 4, 4, 4, 100, 0,   0,   0,   0},
+	// // {{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
+	// {{CAMERA, 0,0, -3, 0, 0, 1, 100, 0,   0,   0,   0},
+
+	//  {AMBIENT, 0, 0, 0, 0, 0, 0, 0.2, 0, 255, 255, 255},
+
+	//  {PLANE, -pl, 0, 0, 1, 0, 0, 0.5, 0, DARKGREEN},
+	//  {PLANE, 0, 0, -pl, 0, 0, 2, 0.5, 0, DARKRED},
+	//  {PLANE, 0, -pl, 0, 0, 1, 0, 0.5, 0, DARKBLUE},
+	//  {PLANE, pl, 0, 0, 1, 0, 0, 0.5, 0, BROWN},
+	//  {PLANE, 0, 0, pl, 0, 0, 2, 0.5, 0, GRAY},
+	//  {PLANE, 0, pl, 0, 0, 1, 0, 0.5, 0, DARKY},
+
+	// //  {CYLINDER, sr, sr, sr, 0, 1, 0, 0.9, 1, RED},
+	// //  {CYLINDER, -sr, sr, -sr, 0, 1, 0, 0.9, 1, GREEN},
+	//  {CYLINDER, -sr, sr, sr, 0, 1, 0, 0.9, 1, YELLOW},
+	// //  {CYLINDER, sr, sr, -sr, 0, 1, 0, 0.9, 1, BLUE},
+	//  {LIGHT, 0, 0, 0, 0, 1, 0, 1, 8, WHITE},
+	// //  {SPHERE, sr, -sr, sr, 0, 0, 0, 0.9, 0, PINK},
+	// //  {SPHERE, -sr, -sr, -sr, 0, 0, 0, 0.9, 0, PURPLE},
+	// //  {SPHERE, -sr, -sr, sr, 0, 0, 0, 0.9, 0, OILY},
+	// //  {SPHERE, sr, -sr, -sr, 0, 0, 0, 0.9, 0, CYAN},
+	 
+	//  {INVALID, 0, 0, 0, 0, 0, 0,   0, 0,   0,   0,   0}
+	// };
 	ret = malloc(sizeof(double *) * rows);
 	for (int i=0;i<rows;i++)
 		ret[i] = malloc(sizeof(double) * 12);
