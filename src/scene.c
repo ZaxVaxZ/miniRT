@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/06 03:01:05 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 01:15:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,23 @@ void	setup_scene(t_main *m, t_scene *s)
 		-s->camera.focal_len);
 }
 
+int	inbetween(t_main *m, t_ray ray, t_object obj)
+{
+	t_vector	diff1;
+	t_vector	diff2;
+
+	vector_op(&diff1, &m->scene.light.origin, '-', &ray.origin);
+	vector_op(&diff2, &m->scene.light.origin, '-', &obj.origin);
+	return (dot(diff1, diff2) >= 0);
+}
+
 int	interrupted(t_main *m, t_hit *h)
 {
 	int		u;
 	t_ray	ray;
 	t_hit	hit;
 
+	hit.closest = -1;
 	copy_vector(&ray.origin, &h->hitp);
 	vector_op(&ray.orient, &m->scene.light.origin, '-', &h->hitp);
 	normalize(&ray.orient);
@@ -79,14 +90,17 @@ int	interrupted(t_main *m, t_hit *h)
 	while (u < m->scene.sp_cnt || u < m->scene.pl_cnt
 		|| u < m->scene.cy_cnt || u < m->scene.co_cnt)
 	{
-		if (u < m->scene.sp_cnt && hit_sphere(ray, m->scene.spheres[u], &hit))
+		if (u < m->scene.sp_cnt && inbetween(m, ray, m->scene.spheres[u])
+			&& hit_sphere(ray, m->scene.spheres[u], &hit))
 			return (1);
-		if (u < m->scene.pl_cnt && hit_plane(ray, m->scene.planes[u], &hit))
+		if (u < m->scene.pl_cnt && inbetween(m, ray, m->scene.planes[u])
+			&& hit_plane(ray, m->scene.planes[u], &hit))
 			return (1);
-		if (u < m->scene.cy_cnt
+		if (u < m->scene.cy_cnt && inbetween(m, ray, m->scene.cylinders[u])
 			&& hit_cylinder(ray, m->scene.cylinders[u], &hit))
 			return (1);
-		if (u < m->scene.co_cnt && hit_cone(ray, m->scene.cones[u], &hit))
+		if (u < m->scene.co_cnt && inbetween(m, ray, m->scene.cones[u])
+			&& hit_cone(ray, m->scene.cones[u], &hit))
 			return (1);
 		u++;
 	}

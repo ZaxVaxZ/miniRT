@@ -31,8 +31,6 @@ int	hit_sphere(t_ray ray, t_object sp, t_hit *hit)
 	double		vals[5];
 	t_vector	c_q;
 
-	printf("%lf, %lf, %lf - %lf, %lf, %lf\n", ray.origin.x, ray.origin.y, ray.origin.z, ray.orient.x, ray.orient.y, ray.orient.z);
-	printf("%lf, %lf, %lf\n", sp.origin.x, sp.origin.y, sp.origin.z);
 	vals[A] = dot(ray.orient, ray.orient);
 	vector_op(&c_q, &sp.origin, '-', &ray.origin);
 	vals[B] = -2.0 * dot(ray.orient, c_q);
