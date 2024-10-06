@@ -68,11 +68,11 @@ double	**get_objs(void)
 	
 	double sr=1;
 	double pl=4;
-	rows = 18;
-	double arr[18][12] = 
+	rows = 19;
+	double arr[19][12] = 
 	// {{CAMERA, -3,-3, -3, 4, 4, 4, 100, 0,   0,   0,   0},
-	{{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
-	// {{CAMERA, 0,0, -3, 0, 0, 1, 100, 0,   0,   0,   0},
+	// {{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
+	{{CAMERA, 0,0, -3, 0, 0, 1, 100, 0,   0,   0,   0},
 
 	 {AMBIENT, 0, 0, 0, 0, 0, 0, 0.2, 0, 255, 255, 255},
 
@@ -87,6 +87,7 @@ double	**get_objs(void)
 	 {SPHERE, -sr,  sr, -sr, 0, 1, 0, 0.9, 1, GREEN},
 	 {SPHERE, -sr,  sr,  sr, 0, 1, 0, 0.9, 1, YELLOW},
 	 {SPHERE,  sr,  sr, -sr, 0, 1, 0, 0.9, 1, RED},
+	 {SPHERE,   0,   0,   0, 0, 1, 0, 0.9, 1, WHITE},
 	 { LIGHT,   0,   0,   0, 0, 1, 0, 1.5, 8, WHITE},
 	 {SPHERE,  sr, -sr,  sr, 0, 0, 0, 0.9, 0, MAGENTA},
 	 {SPHERE, -sr, -sr, -sr, 0, 0, 0, 0.9, 0, PURPLE},
