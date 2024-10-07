@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/05 02:24:48 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 04:10:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@
 # define ASPECT_RATIO 1.778
 # define WIN_HEIGHT 860
 # define ESC 53
-# define CONE 0
-# define PLANE 1
-# define SPHERE 2
-# define CYLINDER 3
-# define AMBIENT 4
-# define CAMERA 5
-# define LIGHT 6
+# define PLANE 0
+# define SPHERE 1
+# define CYLINDER 2
+# define AMBIENT 3
+# define CAMERA 4
+# define LIGHT 5
 # define INVALID -1
 # define ERR_MEM "Memory allocation failed"
 # define SUCCESS "Execution Complete!"
@@ -61,7 +60,6 @@ typedef struct s_object
 	t_point		origin;
 	t_color		color;
 	t_vector	orient;
-	t_matrix_2d	trans_matrix;
 }	t_object;
 
 typedef struct s_light
@@ -100,6 +98,7 @@ typedef struct s_hit
 	t_color		color;
 	t_vector	normal;
 	t_point		hitp;
+	t_object	*obj;
 }	t_hit;
 
 typedef struct s_scene
@@ -107,9 +106,7 @@ typedef struct s_scene
 	int			cy_cnt;
 	int			sp_cnt;
 	int			pl_cnt;
-	int			co_cnt;
 	t_camera	camera;
-	t_object	*cones;
 	t_object	*planes;
 	t_object	*spheres;
 	t_object	*cylinders;
@@ -138,7 +135,7 @@ typedef struct s_main
 
 void	free_and_exit(t_main *m, char *msg, int status);
 void	free_matrix(t_matrix_2d *m);
-void	free_scene(t_scene s);
+void	free_scene(t_scene *s);
 void	free_double_array(double **arr);
 int		ft_malloc(void **pointer, int n, int size);
 double	**get_objs(void);

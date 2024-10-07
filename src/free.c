@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:39:48 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/24 09:40:38 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 04:11:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,12 @@ void	free_matrix(t_matrix_2d *m)
 	m->array = NULL;
 }
 
-void	free_scene(t_scene s)
+void	free_scene(t_scene *s)
 {
-	int	i;
-
-	i = -1;
-	while (++i < s.co_cnt)
-		free_matrix(&s.cones[i].trans_matrix);
-	free(s.cones);
-	i = -1;
-	while (++i < s.pl_cnt)
-		free_matrix(&s.planes[i].trans_matrix);
-	free(s.planes);
-	i = -1;
-	while (++i < s.sp_cnt)
-		free_matrix(&s.spheres[i].trans_matrix);
-	free(s.spheres);
-	i = -1;
-	while (++i < s.cy_cnt)
-		free_matrix(&s.cylinders[i].trans_matrix);
-	free(s.cylinders);
+	free(s->planes);
+	free(s->spheres);
+	free(s->cylinders);
+	free_matrix(&s->camera.trans_matrix);
 }
 
 void	free_and_exit(t_main *m, char *msg, int status)
@@ -81,7 +67,7 @@ void	free_and_exit(t_main *m, char *msg, int status)
 	if (printf("%s\n", msg) < 0)
 		status = EXIT_FAILURE;
 	free_double_array(m->objs);
-	free_scene(m->scene);
+	free_scene(&m->scene);
 	if (m->img && m->mlx)
 		mlx_destroy_image(m->mlx, m->img);
 	if (m->mw && m->mlx)

@@ -71,12 +71,6 @@ void	read_shape_values(t_main *m, t_object *o, double *vals)
 	o->color.x = vals[i++];
 	o->color.y = vals[i++];
 	o->color.z = vals[i++];
-	if (create_matrix(&o->trans_matrix, 4, 4))
-		free_and_exit(m, ERR_MEM, EXIT_FAILURE);
-	o->trans_matrix.array[0][0] = 1;
-	o->trans_matrix.array[1][1] = 1;
-	o->trans_matrix.array[2][2] = 1;
-	o->trans_matrix.array[3][3] = 1;
 	transform_vector(&m->scene.camera.trans_matrix, &o->origin, 1);
 	transform_vector(&m->scene.camera.trans_matrix, &o->orient, 0);
 }
@@ -93,7 +87,6 @@ void	count_shapes(int count[4], double **objs)
 	i = -1;
 	while (objs[++i][0] != INVALID)
 	{
-		count[CONE] += is_equal(objs[i][0], CONE);
 		count[PLANE] += is_equal(objs[i][0], PLANE);
 		count[SPHERE] += is_equal(objs[i][0], SPHERE);
 		count[CYLINDER] += is_equal(objs[i][0], CYLINDER);

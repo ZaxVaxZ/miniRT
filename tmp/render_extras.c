@@ -54,10 +54,10 @@ double	**get_objs(void)
 	 {PLANE, 0,  pl, 0, 0, 1, 0, 0.5, 0, DARKY},
 
 	 {SPHERE,   0,  sr,   0, 0, 1, 0, 0.9, 1, BLUE},
-	 {SPHERE,   0, -sr,   0, 0, 1, 0, 0.9, 1, GREEN},
+	 {SPHERE,   0, -sr,   0, 0, 1, 0, 0.9, 1, MAGENTA},
 	 {SPHERE,  sr,   0,   0, 0, 1, 0, 0.9, 1, YELLOW},
 	 {SPHERE, -sr,   0,   0, 0, 1, 0, 0.9, 1, RED},
-	 {SPHERE,   0,   0,  sr, 0, 0, 0, 0.9, 0, MAGENTA},
+	 {SPHERE,   0,   0,  sr, 0, 0, 0, 0.9, 0, GREEN},
 	 {SPHERE,   0,   0, -sr, 0, 0, 0, 0.9, 0, PURPLE},
 	 { LIGHT,   0,   0,   0, 0, 1, 0, 1.5, 8, WHITE},
 	 

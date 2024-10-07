@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:28:33 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/07 00:29:44 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 04:18:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,14 @@ static int	hit_objects(t_main *m, t_ray *ray, int i, int j)
 
 	hit.closest = -1;
 	u = -1;
-	while (++u < m->scene.co_cnt)
-		hit_cone(*ray, m->scene.cones[u], &hit);
-	u = -1;
 	while (++u < m->scene.sp_cnt)
-		hit_sphere(*ray, m->scene.spheres[u], &hit);
+		hit_sphere(*ray, &m->scene.spheres[u], &hit);
 	u = -1;
 	while (++u < m->scene.pl_cnt)
-		hit_plane(*ray, m->scene.planes[u], &hit);
+		hit_plane(*ray, &m->scene.planes[u], &hit);
 	u = -1;
 	while (++u < m->scene.cy_cnt)
-		hit_cylinder(*ray, m->scene.cylinders[u], &hit);
+		hit_cylinder(*ray, &m->scene.cylinders[u], &hit);
 	if (hit.closest > -1)
 	{
 		light_up(m, &hit);

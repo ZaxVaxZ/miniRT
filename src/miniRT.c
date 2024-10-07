@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:31:51 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/06 22:42:50 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 04:18:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ int	main(void)
 	mlx_hook(m.mw, 17, 1L << 2, exitbutton_hook, &m);
 	mlx_put_image_to_window(m.mlx, m.mw, m.img, 0, 0);
 	mlx_loop(m.mlx);
+	free_and_exit(&m, "Done", 0);
 	return (0);
 }

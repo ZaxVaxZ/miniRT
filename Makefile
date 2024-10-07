@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Iinc -Wall -Wextra -Werror -fsanitize=address,undefined -g3
+CFLAGS = -Iinc -Wall -Wextra -Werror -g3#-fsanitize=address,undefined -g3
 NAME = miniRT
 
 LIBFT_DIR = ./lib/Libft/

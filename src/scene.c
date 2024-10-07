@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/07 01:15:31 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 04:00:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ static void	setup_shapes(t_main *m, int cnt[4])
 {
 	if (!m)
 		return ;
-	m->scene.co_cnt = 0;
 	m->scene.pl_cnt = 0;
 	m->scene.sp_cnt = 0;
 	m->scene.cy_cnt = 0;
-	create_shapes_arr(m, (void **)&m->scene.cones, cnt[CONE], CONE);
 	create_shapes_arr(m, (void **)&m->scene.planes, cnt[PLANE], PLANE);
 	create_shapes_arr(m, (void **)&m->scene.spheres, cnt[SPHERE], SPHERE);
 	create_shapes_arr(m, (void **)&m->scene.cylinders, cnt[CYLINDER], CYLINDER);
@@ -36,8 +34,6 @@ void	init_scene(t_main *m, t_scene *s, double **objs)
 	i = -1;
 	while (objs[++i][0] != INVALID)
 	{
-		if (is_equal(objs[i][0], CONE))
-			read_shape_values(m, &s->cones[s->co_cnt++], objs[i]);
 		if (is_equal(objs[i][0], PLANE))
 			read_shape_values(m, &s->planes[s->pl_cnt++], objs[i]);
 		if (is_equal(objs[i][0], SPHERE))
@@ -66,41 +62,44 @@ void	setup_scene(t_main *m, t_scene *s)
 		-s->camera.focal_len);
 }
 
-int	inbetween(t_main *m, t_ray ray, t_object obj)
+static int	shadows(t_main *m, t_hit *h, t_ray ray, t_object *obj)
 {
 	t_vector	diff1;
 	t_vector	diff2;
+	t_hit		hit;
 
+	if (obj == h->obj)
+		return (0);
+	hit.closest = -1;
 	vector_op(&diff1, &m->scene.light.origin, '-', &ray.origin);
-	vector_op(&diff2, &m->scene.light.origin, '-', &obj.origin);
-	return (dot(diff1, diff2) >= 0);
+	vector_op(&diff2, &m->scene.light.origin, '-', &obj->origin);
+	if (dot(diff1, diff2) < 0)
+		return (0);
+	if (obj->object_type == SPHERE)
+		return (hit_sphere(ray, obj, &hit));
+	else if (obj->object_type == PLANE)
+		return (hit_plane(ray, obj, &hit));
+	else
+		return (hit_cylinder(ray, obj, &hit));
 }
 
 int	interrupted(t_main *m, t_hit *h)
 {
 	int		u;
 	t_ray	ray;
-	t_hit	hit;
 
-	hit.closest = -1;
 	copy_vector(&ray.origin, &h->hitp);
 	vector_op(&ray.orient, &m->scene.light.origin, '-', &h->hitp);
 	normalize(&ray.orient);
 	u = 0;
 	while (u < m->scene.sp_cnt || u < m->scene.pl_cnt
-		|| u < m->scene.cy_cnt || u < m->scene.co_cnt)
+		|| u < m->scene.cy_cnt)
 	{
-		if (u < m->scene.sp_cnt && inbetween(m, ray, m->scene.spheres[u])
-			&& hit_sphere(ray, m->scene.spheres[u], &hit))
+		if (u < m->scene.sp_cnt && shadows(m, h, ray, &m->scene.spheres[u]))
 			return (1);
-		if (u < m->scene.pl_cnt && inbetween(m, ray, m->scene.planes[u])
-			&& hit_plane(ray, m->scene.planes[u], &hit))
+		if (u < m->scene.pl_cnt && shadows(m, h, ray, &m->scene.planes[u]))
 			return (1);
-		if (u < m->scene.cy_cnt && inbetween(m, ray, m->scene.cylinders[u])
-			&& hit_cylinder(ray, m->scene.cylinders[u], &hit))
-			return (1);
-		if (u < m->scene.co_cnt && inbetween(m, ray, m->scene.cones[u])
-			&& hit_cone(ray, m->scene.cones[u], &hit))
+		if (u < m->scene.cy_cnt && shadows(m, h, ray, &m->scene.cylinders[u]))
 			return (1);
 		u++;
 	}
