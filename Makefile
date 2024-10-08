@@ -19,7 +19,7 @@ TMP_SRC = render_extras.c
 SRCS += $(addprefix $(TMP_DIR), $(TMP_SRC))
 
 SRC_DIR = ./src/
-CFILES = miniRT.c render.c hooks.c free.c scene.c read_values.c
+CFILES = parse_utils.c parse_objs.c parser.c miniRT.c render.c hooks.c free.c scene.c read_values.c
 SRCS += $(addprefix $(SRC_DIR), $(CFILES))
 
 OBJS = $(SRCS:.c=.o)
