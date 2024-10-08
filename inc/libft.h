@@ -18,7 +18,8 @@
 # include <unistd.h>
 # include <stdint.h>
 
-int		ft_atoi(const char *str);
 size_t	ft_strlen(const char *s);
+int		ft_atoi(const char *str);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 20:16:43 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/09/15 20:40:24 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 15:31:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 char	*get_next_line(int fd);
 char	*ft_add_next(char *line, char *buffer);
-size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 
 #endif

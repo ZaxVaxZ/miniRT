@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/07 04:10:16 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/08 04:29:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include "mlx.h"
-//1.778
+
 # define ASPECT_RATIO 1.778
 # define WIN_HEIGHT 860
 # define ESC 53
@@ -32,7 +32,7 @@
 # define ERR_MEM "Memory allocation failed"
 # define SUCCESS "Execution Complete!"
 # define FAILURE "Unexpected error"
-# define PI 3.141592653589793238
+# define PI 3.1415926535
 
 typedef struct s_vector
 {
@@ -58,6 +58,8 @@ typedef struct s_object
 	double		radius;
 	double		height;
 	t_point		origin;
+	t_point		top;
+	t_point		bot;
 	t_color		color;
 	t_vector	orient;
 }	t_object;

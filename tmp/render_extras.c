@@ -38,10 +38,12 @@ double	**get_objs(void)
 
 	double sr=2;
 	double pl=4;
-	rows = 16;
-	double arr[16][12] = 
+	rows = 14;
+	double arr[14][12] = 
+	{{CAMERA, 3.9, 1, 3.9, -3.9, -1, -3.9, 100, 0,   0,   0,   0},
+	// {{CAMERA, 3.9, -3.9, 3.9, -3.9, 3.9, -3.9, 100, 0,   0,   0,   0},
 	// {{CAMERA, -3,-3, -3, 4, 4, 4, 100, 0,   0,   0,   0},
-	{{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
+	// {{CAMERA, -3,-3, -1, 4, 4, 1, 100, 0,   0,   0,   0},
 	// {{CAMERA, 0,0, -3, 0, 0, 1, 100, 0,   0,   0,   0},
 
 	 {AMBIENT, 0, 0, 0, 0, 0, 0, 0.3, 0, 255, 255, 255},
@@ -53,12 +55,11 @@ double	**get_objs(void)
 	 {PLANE, 0, 0,  pl, 0, 0, 2, 0.5, 0, GRAY},
 	 {PLANE, 0,  pl, 0, 0, 1, 0, 0.5, 0, DARKY},
 
-	 {SPHERE,   0,  sr,   0, 0, 1, 0, 0.9, 1, BLUE},
-	 {SPHERE,   0, -sr,   0, 0, 1, 0, 0.9, 1, MAGENTA},
-	 {SPHERE,  sr,   0,   0, 0, 1, 0, 0.9, 1, YELLOW},
-	 {SPHERE, -sr,   0,   0, 0, 1, 0, 0.9, 1, RED},
-	 {SPHERE,   0,   0,  sr, 0, 0, 0, 0.9, 0, GREEN},
-	 {SPHERE,   0,   0, -sr, 0, 0, 0, 0.9, 0, PURPLE},
+	//  {SPHERE,  sr,   0,   0, 0, 1, 0, 0.5, 1, GREEN},
+	 {CYLINDER,  sr,   0,   0, -1, 1, 0, 0.5, 1, YELLOW},
+	 {CYLINDER, -sr,   0,   0, 1, 1, 0, 0.5, 1, RED},
+	 {CYLINDER,   0,   0,  sr, 0, 1, -1, 0.5, 1, GREEN},
+	 {CYLINDER,   0,   0, -sr, 0, 1, 1, 0.5, 1, PURPLE},
 	 { LIGHT,   0,   0,   0, 0, 1, 0, 1.5, 8, WHITE},
 	 
 	 {INVALID, 0, 0, 0, 0, 0, 0,   0, 0,   0,   0,   0}

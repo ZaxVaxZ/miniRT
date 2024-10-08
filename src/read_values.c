@@ -66,8 +66,6 @@ void	read_shape_values(t_main *m, t_object *o, double *vals)
 	o->orient.z = vals[i++];
 	o->radius = vals[i++] / 2.0;
 	o->height = vals[i++];
-	if (o->object_type == SPHERE)
-		o->height = o->radius;
 	o->color.x = vals[i++];
 	o->color.y = vals[i++];
 	o->color.z = vals[i++];

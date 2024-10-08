@@ -89,3 +89,29 @@ int	copy_matrix(t_matrix_2d *dest, const t_matrix_2d *src)
 	}
 	return (0);
 }
+
+void	transform_vector(t_matrix_2d *m, t_vector *v, int is_point)
+{
+	int		i;
+	int		j;
+	double	res[4];
+
+	v->quat[0] = v->x;
+	v->quat[1] = v->y;
+	v->quat[2] = v->z;
+	v->quat[3] = is_point;
+	res[0] = 0;
+	res[1] = 0;
+	res[2] = 0;
+	res[3] = 0;
+	i = -1;
+	while (++i < m->rows)
+	{
+		j = -1;
+		while (++j < m->cols)
+			res[i] += m->array[i][j] * v->quat[j];
+	}
+	v->x = res[0];
+	v->y = res[1];
+	v->z = res[2];
+}

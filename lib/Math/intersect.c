@@ -63,7 +63,7 @@ int	hit_plane(t_ray ray, t_object *pl, t_hit *hit)
 	result = dot(tmp, pl->orient) / denominator;
 	if (result < 1e-6)
 		return (0);
-	if (result >= 0 && (hit->closest == -1 || result < hit->closest))
+	if (hit->closest == -1 || result < hit->closest)
 	{
 		hit->closest = result;
 		scalar_op(&hit->hitp, &ray.orient, '*', result);
@@ -82,6 +82,7 @@ int	hit_plane(t_ray ray, t_object *pl, t_hit *hit)
 int	hit_cylinder(t_ray ray, t_object *cy, t_hit *hit)
 {
 	double		vals[5];
+	double		ret;
 	t_vector	cy_right;
 	t_vector	c_q;
 
@@ -92,17 +93,19 @@ int	hit_cylinder(t_ray ray, t_object *cy, t_hit *hit)
 	vals[B] = -2 * dot(cy_right, c_q);
 	vals[C] = dot(c_q, c_q) - cy->radius * cy->radius;
 	vals[RES] = solve_quadratic(vals);
-	if (vals[RES] >= 0 && (hit->closest == -1 || vals[RES] < hit->closest))
+	ret = cy_cap_intersect(cy, &ray, hit);
+	if (vals[RES] >= 0 && valid_hit(cy, ray, vals[RES])
+		&& (hit->closest == -1 || vals[RES] < hit->closest))
 	{
 		hit->closest = vals[RES];
 		scalar_op(&hit->hitp, &ray.orient, '*', vals[RES]);
 		vector_op(&hit->hitp, &hit->hitp, '+', &ray.origin);
 		copy_vector(&hit->color, &cy->color);
 		cross_vector(&hit->normal, c_q, cy->orient);
-		cross_vector(&hit->normal, hit->normal, cy->orient);
+		// cross_vector(&hit->normal, hit->normal, cy->orient);
 		normalize(&hit->normal);
 		hit->obj = cy;
 		return (1);
 	}
-	return (0);
+	return (ret);
 }
