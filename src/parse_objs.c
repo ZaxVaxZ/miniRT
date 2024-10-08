@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:58:39 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/08 07:22:27 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/08 21:53:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int parse_values(char **line, double *arr, int start, int count)
 	return (issue);
 }
 
-void parse_shape(char *line, int &i, double *scene_arr, int *issue)
+void parse_shape(char *line, int *i, double *scene_arr, int *issue)
 {
 	int obj_type;
 
@@ -57,7 +57,7 @@ void parse_shape(char *line, int &i, double *scene_arr, int *issue)
 	*issue += parse_values(&line, scene_arr, 9, 3);
 }
 
-void camera(char *line, double *scene_arr, int row, int *issue)
+void camera(char *line, double *scene_arr, int *issue)
 {
 	*issue = 0;
 	scene_arr[0] = CAMERA;
@@ -67,7 +67,7 @@ void camera(char *line, double *scene_arr, int row, int *issue)
 	*issue += parse_values(&line, scene_arr, 7, 1);
 }
 
-void ambient(char *line, double *scene_arr, int row, int *issue)
+void ambient(char *line, double *scene_arr, int *issue)
 {
 	*issue = 0;
 	scene_arr[0] = AMBIENT;
@@ -76,7 +76,7 @@ void ambient(char *line, double *scene_arr, int row, int *issue)
 	*issue += parse_values(&line, scene_arr, 9, 3);
 }
 
-void light(char *line, double *scene_arr, int row, int *issue)
+void light(char *line, double *scene_arr, int *issue)
 {
 	*issue = 0;
 	scene_arr[0] = LIGHT;

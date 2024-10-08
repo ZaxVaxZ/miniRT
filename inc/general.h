@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/08 04:29:40 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 01:50:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include "mlx.h"
+# include "parser.h"
 
 # define ASPECT_RATIO 1.778
 # define WIN_HEIGHT 860
@@ -25,8 +26,8 @@
 # define PLANE 0
 # define SPHERE 1
 # define CYLINDER 2
-# define AMBIENT 3
-# define CAMERA 4
+# define CAMERA 3
+# define AMBIENT 4
 # define LIGHT 5
 # define INVALID -1
 # define ERR_MEM "Memory allocation failed"

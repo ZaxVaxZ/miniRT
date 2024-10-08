@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:31:51 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/08 07:27:09 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 01:46:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	init_main_struct(t_main *m)
 	m->win_height = WIN_HEIGHT;
 	m->win_width = m->win_height * ASPECT_RATIO;
 	m->aspect_ratio = ((double) m->win_width / m->win_height);
-	m->objs = get_objs();
 	init_scene(m, &m->scene, m->objs);
 	setup_scene(m, &m->scene);
 	free_double_array(m->objs);
@@ -33,24 +32,13 @@ void	init_main_struct(t_main *m)
 		free_and_exit(m, "Error\nInvalid FOV value!\n", EXIT_FAILURE);
 }
 
-// int	main(void)
-// {
-// 	t_main	m;
-// 	t_hit	hit;
-
-// 	init_main_struct(&m);
-// 	hit.closest = -1;
-// 	assign(&hit.hitp, -3, -3, -3);
-// 	transform_vector(&m.scene.camera.trans_matrix, &hit.hitp, 1);
-// 	printf("%d\n", interrupted(&m, &hit));
-// 	free_and_exit(&m, "Done", 0);
-// 	return (0);
-// }
-
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_main	m;
 
+	if (ac != 2)
+		free_and_exit(NULL, "Wrong number of arguments", 1);
+	m.objs = open_file(av[1]);
 	init_main_struct(&m);
 	m.mlx = mlx_init();
 	if (!m.mlx)

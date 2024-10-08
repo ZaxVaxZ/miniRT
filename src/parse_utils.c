@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:03:36 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/08 07:23:12 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 01:47:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	check_values(double *arr, int count, double low, double high)
 int	valid_values(double **arr)
 {
 	int	i;
-	int	j;
 	int	issues;
 
 	issues = check_values(arr[0] + 3, 3, -1, 1);
@@ -48,7 +47,7 @@ int	valid_values(double **arr)
 	return (issues);
 }
 
-double	**allocate_scene_array(t_main *m, int object_count)
+double	**allocate_scene_array(int object_count)
 {
 	double	**scene_arr;
 	int		i;
@@ -57,14 +56,14 @@ double	**allocate_scene_array(t_main *m, int object_count)
 	i = 0;
 	scene_arr = malloc(sizeof(double *) * object_count);
 	if (!scene_arr)
-		free_and_exit(m, ERR_MEM, EXIT_FAILURE);
+		free_and_exit(NULL, ERR_MEM, EXIT_FAILURE);
 	while (i < object_count)
 	{
 		scene_arr[i] = malloc(sizeof(double) * 12);
 		if (!scene_arr[i])
 		{
 			free_double_array(scene_arr);
-			free_and_exit(m, ERR_MEM, EXIT_FAILURE);
+			free_and_exit(NULL, ERR_MEM, EXIT_FAILURE);
 		}
 		j = -1;
 		while (++j < 12)

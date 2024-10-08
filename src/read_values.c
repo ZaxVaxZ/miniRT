@@ -73,7 +73,7 @@ void	read_shape_values(t_main *m, t_object *o, double *vals)
 	transform_vector(&m->scene.camera.trans_matrix, &o->orient, 0);
 }
 
-void	count_shapes(int count[4], double **objs)
+void	count_shapes(int count[3], double **objs)
 {
 	int	i;
 

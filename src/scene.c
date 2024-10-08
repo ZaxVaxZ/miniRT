@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/07 04:00:12 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 01:50:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	setup_shapes(t_main *m, int cnt[4])
 void	init_scene(t_main *m, t_scene *s, double **objs)
 {
 	int	i;
-	int	shape_cnt[4];
+	int	shape_cnt[3];
 
 	count_shapes(shape_cnt, objs);
 	setup_shapes(m, shape_cnt);

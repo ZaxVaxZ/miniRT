@@ -3,7 +3,7 @@ CFLAGS = -Iinc -Wall -Wextra -Werror -g3#-fsanitize=address,undefined -g3
 NAME = miniRT
 
 LIBFT_DIR = ./lib/Libft/
-LIBFT_SRC = ft_strlen.c ft_atoi.c
+LIBFT_SRC = ft_strlen.c ft_atoi.c ft_strncmp.c
 SRCS += $(addprefix $(LIBFT_DIR), $(LIBFT_SRC))
 
 GNL_DIR = ./lib/get_next_line/
