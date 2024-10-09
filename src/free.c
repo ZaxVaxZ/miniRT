@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:39:48 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/09 01:44:48 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 11:03:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ void	free_double_array(double **arr)
 	if (!arr)
 		return ;
 	i = 0;
-	while (arr[i] && arr[i][0] != INVALID)
+	while (arr[i])
 		free(arr[i++]);
-	if (arr[i])
-		free(arr[i]);
 	free(arr);
 }
 

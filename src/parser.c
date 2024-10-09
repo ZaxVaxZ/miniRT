@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:52:03 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/09 01:48:25 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 11:03:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	count_objects(int fd)
 	i = -1;
 	while (++i < 6)
 		vals[SUM] += vals[i];
-	return (vals[SUM]);
+	return (vals[SUM] + 1);
 }
 
 static int	read_file(int fd, double **scene_arr)
@@ -106,6 +106,8 @@ double	**open_file(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0 || read_file(fd, scene_arr) != 0 || valid_values(scene_arr))
 	{
+		if (fd >= 0)
+			close(fd);
 		free_double_array(scene_arr);
 		free_and_exit(NULL, "Problem while parsing file", EXIT_FAILURE);
 	}

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:03:36 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/09 01:47:18 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 11:12:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ double	**allocate_scene_array(int object_count)
 	scene_arr = malloc(sizeof(double *) * object_count);
 	if (!scene_arr)
 		free_and_exit(NULL, ERR_MEM, EXIT_FAILURE);
-	while (i < object_count)
+	while (i < object_count - 1)
 	{
 		scene_arr[i] = malloc(sizeof(double) * 12);
 		if (!scene_arr[i])
@@ -70,6 +70,7 @@ double	**allocate_scene_array(int object_count)
 			scene_arr[i][j] = 0;
 		i++;
 	}
+	scene_arr[i] = NULL;
 	return (scene_arr);
 }
 
@@ -84,17 +85,17 @@ double	str_to_double(char **str, int *issue)
 	sign = 1 - 2 * (**str == '-');
 	*str += (**str == '-');
 	while (**str >= '0' && **str <= '9')
-		result = result * 10.0 + (*(*str++) - '0');
+		result = result * 10.0 + (*((*str)++) - '0');
 	if (**str == '.')
 	{
 		(*str)++;
 		while (**str >= '0' && **str <= '9')
 		{
 			decimal *= 0.1;
-			result += (*(*str++) - '0') * decimal;
+			result += (*((*str)++) - '0') * decimal;
 		}
 	}
-	if (**str != ' ' && **str != '\0')
+	if (**str != ' ' && **str != '\n' && **str != '\0')
 		*issue = 1;
 	return (sign * result);
 }
