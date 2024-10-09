@@ -78,12 +78,10 @@ void	count_shapes(int count[3], double **objs)
 	int	i;
 
 	i = -1;
-	while (++i < 4)
+	while (++i < 3)
 		count[i] = 0;
-	if (!objs || !objs[0])
-		return ;
 	i = -1;
-	while (objs[++i][0] != INVALID)
+	while (objs[++i])
 	{
 		count[PLANE] += is_equal(objs[i][0], PLANE);
 		count[SPHERE] += is_equal(objs[i][0], SPHERE);

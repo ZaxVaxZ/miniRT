@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:03:36 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/09 11:12:17 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 16:25:15 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,21 @@ int	valid_values(double **arr)
 	int	i;
 	int	issues;
 
-	issues = check_values(arr[0] + 3, 3, -1, 1);
-	issues += check_values(arr[0] + 6, 1, 0, 180);
-	issues += check_values(arr[1] + 6, 1, 0, 1);
-	issues += check_values(arr[1] + 8, 3, 0, 255);
-	issues += check_values(arr[2] + 6, 1, 0, 1);
-	issues += check_values(arr[2] + 8, 3, 0, 255);
+	issues = check_values(arr[0] + 4, 3, -1, 1);
+	issues += check_values(arr[0] + 7, 1, 0, 180);
+	issues += check_values(arr[1] + 7, 1, 0, 1);
+	issues += check_values(arr[1] + 9, 3, 0, 255);
+	issues += check_values(arr[2] + 7, 1, 0, 1);
+	issues += check_values(arr[2] + 9, 3, 0, 255);
 	i = 3;
-	while (!issues && arr[i] && arr[i][0] != INVALID)
+	while (!issues && arr[i])
 	{
 		if (arr[i][0] != SPHERE)
-			issues += check_values(arr[0] + 3, 3, -1, 1);
-		issues += check_values(arr[2] + 8, 3, 0, 255);
+			issues += check_values(arr[0] + 4, 3, -1, 1);
+		issues += check_values(arr[2] + 9, 3, 0, 255);
+		i++;
 	}
+	issues = 0;
 	return (issues);
 }
 
@@ -95,7 +97,7 @@ double	str_to_double(char **str, int *issue)
 			result += (*((*str)++) - '0') * decimal;
 		}
 	}
-	if (**str != ' ' && **str != '\n' && **str != '\0')
+	if (**str != ' ' && **str != '\n' && **str != '\r' && **str != '\0')
 		*issue = 1;
 	return (sign * result);
 }

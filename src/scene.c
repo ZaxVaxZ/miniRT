@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/09 01:50:47 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 15:11:15 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	init_scene(t_main *m, t_scene *s, double **objs)
 	count_shapes(shape_cnt, objs);
 	setup_shapes(m, shape_cnt);
 	i = -1;
-	while (objs[++i][0] != INVALID)
+	while (objs[++i])
 	{
 		if (is_equal(objs[i][0], PLANE))
 			read_shape_values(m, &s->planes[s->pl_cnt++], objs[i]);

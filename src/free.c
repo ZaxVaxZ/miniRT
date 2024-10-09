@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:39:48 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/09 11:03:27 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 14:53:02 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,12 @@ void	free_matrix(t_matrix_2d *m)
 
 void	free_scene(t_scene *s)
 {
-	free(s->planes);
-	free(s->spheres);
-	free(s->cylinders);
+	if (s->planes)
+		free(s->planes);
+	if (s->spheres)
+		free(s->spheres);
+	if (s->cylinders)
+		free(s->cylinders);
 	free_matrix(&s->camera.trans_matrix);
 }
 

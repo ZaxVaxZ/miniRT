@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:52:03 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/09 11:03:57 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/09 16:25:33 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,17 @@ static int	read_file(int fd, double **scene_arr)
 	line = get_next_line(fd);
 	while (line)
 	{
-		camera(line, scene_arr[0], &issue);
-		ambient(line, scene_arr[1], &issue);
-		light(line, scene_arr[2], &issue);
-		parse_shape(line, &i, scene_arr[i], &issue);
+		if (line[0] && line[0] != '\n' && line[0] != '\0')
+		{
+			camera(line, scene_arr[0], &issue);
+			ambient(line, scene_arr[1], &issue);
+			light(line, scene_arr[2], &issue);
+			parse_shape(line, &i, scene_arr[i], &issue);
+		}
 		free(line);
 		line = get_next_line(fd);
 	}
-	scene_arr[i][0] = INVALID;
+	issue = 0;
 	close(fd);
 	return (issue);
 }
