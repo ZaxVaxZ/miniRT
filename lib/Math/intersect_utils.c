@@ -12,7 +12,7 @@
 
 #include "ft_math.h"
 
-int	valid_hit(t_object *cy, t_ray ray, double ret)
+int	valid_hit(t_object *cy, t_ray ray, t_hit *hit, double ret)
 {
 	t_point	hitp;
 	t_point	diff;
@@ -24,7 +24,7 @@ int	valid_hit(t_object *cy, t_ray ray, double ret)
 	dist = dot(diff, cy->orient);
 	if (dist > 0.5 * cy->height || dist < -0.5 * cy->height)
 		return (0);
-	return (1);
+	return (hit->closest == -1 || ret < hit->closest);
 }
 
 int	intersect_cap(t_object *pl, t_hit *hit, t_ray *ray)

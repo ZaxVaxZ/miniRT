@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:03:36 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/09 16:25:15 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:50:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ double	str_to_double(char **str, int *issue)
 {
 	double	result;
 	double	decimal;
-	int 	sign;
+	int		sign;
 
 	result = 0.0;
 	decimal = 1;

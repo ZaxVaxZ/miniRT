@@ -94,15 +94,13 @@ int	hit_cylinder(t_ray ray, t_object *cy, t_hit *hit)
 	vals[C] = dot(c_q, c_q) - cy->radius * cy->radius;
 	vals[RES] = solve_quadratic(vals);
 	ret = cy_cap_intersect(cy, &ray, hit);
-	if (vals[RES] >= 0 && valid_hit(cy, ray, vals[RES])
-		&& (hit->closest == -1 || vals[RES] < hit->closest))
+	if (vals[RES] >= 0 && valid_hit(cy, ray, hit, vals[RES]))
 	{
 		hit->closest = vals[RES];
 		scalar_op(&hit->hitp, &ray.orient, '*', vals[RES]);
 		vector_op(&hit->hitp, &hit->hitp, '+', &ray.origin);
 		copy_vector(&hit->color, &cy->color);
 		cross_vector(&hit->normal, c_q, cy->orient);
-		// cross_vector(&hit->normal, hit->normal, cy->orient);
 		normalize(&hit->normal);
 		hit->obj = cy;
 		return (1);

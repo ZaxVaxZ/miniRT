@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:58:39 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/09 15:15:33 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:51:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int parse_values(char **line, double *arr, int start, int count)
+int	parse_values(char **line, double *arr, int start, int count)
 {
 	int		i;
 	int		issue;
@@ -20,7 +20,7 @@ int parse_values(char **line, double *arr, int start, int count)
 	issue = 0;
 	i = start;
 	while (i < start + count)
-	{ 
+	{
 		while (**line == ' ')
 			(*line)++;
 		arr[i] = str_to_double(line, &issue);
@@ -31,9 +31,9 @@ int parse_values(char **line, double *arr, int start, int count)
 	return (issue);
 }
 
-void parse_shape(char *line, int *i, double *scene_arr, int *issue)
+void	parse_shape(char *line, int *i, double *scene_arr, int *issue)
 {
-	int obj_type;
+	int	obj_type;
 
 	if (*issue)
 		return ;
@@ -60,7 +60,7 @@ void parse_shape(char *line, int *i, double *scene_arr, int *issue)
 	*issue += parse_values(&line, scene_arr, 9, 3);
 }
 
-void camera(char *line, double *scene_arr, int *issue)
+void	camera(char *line, double *scene_arr, int *issue)
 {
 	if (ft_strncmp(line, "C", 1) != 0)
 		return ;
@@ -72,7 +72,7 @@ void camera(char *line, double *scene_arr, int *issue)
 	*issue += parse_values(&line, scene_arr, 7, 1);
 }
 
-void ambient(char *line, double *scene_arr, int *issue)
+void	ambient(char *line, double *scene_arr, int *issue)
 {
 	if (ft_strncmp(line, "A", 1) != 0)
 		return ;
@@ -83,7 +83,7 @@ void ambient(char *line, double *scene_arr, int *issue)
 	*issue += parse_values(&line, scene_arr, 9, 3);
 }
 
-void light(char *line, double *scene_arr, int *issue)
+void	light(char *line, double *scene_arr, int *issue)
 {
 	if (ft_strncmp(line, "L", 1) != 0)
 		return ;

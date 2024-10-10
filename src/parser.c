@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:52:03 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/09 16:25:33 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:52:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ static void	check_line(char *line, int vals[8])
 	vals[PLANE] += (ft_strncmp(line, "pl", 2) == 0);
 	vals[SPHERE] += (ft_strncmp(line, "sp", 2) == 0);
 	vals[CYLINDER] += (ft_strncmp(line, "cy", 2) == 0);
-	if ((!(ft_strncmp(line, "sp", 2) == 0 || ft_strncmp(line, "pl", 2) == 0
+	if (!(ft_strncmp(line, "sp", 2) == 0 || ft_strncmp(line, "pl", 2) == 0
 			|| ft_strncmp(line, "L", 1) == 0 || ft_strncmp(line, "cy", 2) == 0
 			|| ft_strncmp(line, "A", 1) == 0 || ft_strncmp(line, "C", 1) == 0))
-			|| vals[CAMERA] > 1 || vals[AMBIENT] > 1 || vals[LIGHT] > 1)
+		vals[DUPLICATE] = 1;
+	if (vals[CAMERA] > 1 || vals[AMBIENT] > 1 || vals[LIGHT] > 1)
 		vals[DUPLICATE] = 1;
 }
 
@@ -43,7 +44,8 @@ static int	count_objects(int fd)
 	line = get_next_line(fd);
 	while (line)
 	{
-		check_line(line, vals);
+		if (line[0] != '\0' && line[0] != '\n' && line[0] != '\r')
+			check_line(line, vals);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -67,7 +69,7 @@ static int	read_file(int fd, double **scene_arr)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (line[0] && line[0] != '\n' && line[0] != '\0')
+		if (line[0] && line[0] != '\n' && line[0] != '\r')
 		{
 			camera(line, scene_arr[0], &issue);
 			ambient(line, scene_arr[1], &issue);

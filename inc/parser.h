@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 11:25:17 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/09 01:47:51 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/10 15:53:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ double	**open_file(char *file);
 int		check_values(double *arr, int count, double low, double high);
 int		valid_values(double **arr);
 void	parse_shape(char *line, int *i, double *scene_arr, int *issue);
-void 	light(char *line, double *scene_arr, int *issue);
-void 	ambient(char *line, double *scene_arr, int *issue);
-void 	camera(char *line, double *scene_arr, int *issue);
+void	light(char *line, double *scene_arr, int *issue);
+void	ambient(char *line, double *scene_arr, int *issue);
+void	camera(char *line, double *scene_arr, int *issue);
 
 #endif
