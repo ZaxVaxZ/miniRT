@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 11:25:17 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/10 15:53:32 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/12 04:18:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ double	**allocate_scene_array(int object_count);
 double	**open_file(char *file);
 int		check_values(double *arr, int count, double low, double high);
 int		valid_values(double **arr);
+int		check_end_of_line(char *line);
 void	parse_shape(char *line, int *i, double *scene_arr, int *issue);
 void	light(char *line, double *scene_arr, int *issue);
 void	ambient(char *line, double *scene_arr, int *issue);

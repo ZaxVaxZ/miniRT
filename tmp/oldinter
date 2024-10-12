@@ -37,7 +37,18 @@ int	hit_sphere(t_ray ray, t_object *sp, t_hit *hit)
 	vals[C] = dot(c_q, c_q) - sp->radius * sp->radius;
 	vals[RES] = solve_quadratic(vals);
 	if (vals[RES] >= 0 && (hit->closest == -1 || vals[RES] < hit->closest))
-		return (save_result(sp, ray, hit, vals[RES]));
+	{
+		hit->closest = vals[RES];
+		scalar_op(&hit->hitp, &ray.orient, '*', vals[RES]);
+		vector_op(&hit->hitp, &hit->hitp, '+', &ray.origin);
+		copy_vector(&hit->color, &sp->color);
+		vector_op(&hit->normal, &hit->hitp, '-', &sp->origin);
+		normalize(&hit->normal);
+		if (dot(hit->normal, ray.orient) > 0)
+			scalar_op(&hit->normal, &hit->normal, '*', -1);
+		hit->obj = sp;
+		return (1);
+	}
 	return (0);
 }
 
@@ -55,7 +66,18 @@ int	hit_plane(t_ray ray, t_object *pl, t_hit *hit)
 	if (result < 1e-6)
 		return (0);
 	if (hit->closest == -1 || result < hit->closest)
-		return (save_result(pl, ray, hit, result));
+	{
+		hit->closest = result;
+		scalar_op(&hit->hitp, &ray.orient, '*', result);
+		vector_op(&hit->hitp, &hit->hitp, '+', &ray.origin);
+		copy_vector(&hit->color, &pl->color);
+		copy_vector(&hit->normal, &pl->orient);
+		if (dot(hit->normal, ray.orient) > 0)
+			scalar_op(&hit->normal, &hit->normal, '*', -1);
+		normalize(&hit->normal);
+		hit->obj = pl;
+		return (1);
+	}
 	return (0);
 }
 
@@ -75,6 +97,17 @@ int	hit_cylinder(t_ray ray, t_object *cy, t_hit *hit)
 	vals[RES] = solve_quadratic(vals);
 	ret = cy_cap_intersect(cy, &ray, hit);
 	if (vals[RES] >= 0 && valid_hit(cy, ray, hit, vals[RES]))
-		return (save_result(cy, ray, hit, vals[RES]));
+	{
+		hit->closest = vals[RES];
+		scalar_op(&hit->hitp, &ray.orient, '*', vals[RES]);
+		vector_op(&hit->hitp, &hit->hitp, '+', &ray.origin);
+		copy_vector(&hit->color, &cy->color);
+		cross_vector(&hit->normal, c_q, cy->orient);
+		normalize(&hit->normal);
+		if (dot(hit->normal, ray.orient) > 0)
+			scalar_op(&hit->normal, &hit->normal, '*', -1);
+		hit->obj = cy;
+		return (1);
+	}
 	return (ret);
 }

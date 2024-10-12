@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:52:03 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/11 05:59:13 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/12 04:10:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	read_file(int fd, double **scene_arr)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (line[0] && line[0] != '\n' && line[0] != '\r')
+		if (!issue && line[0] && line[0] != '\n' && line[0] != '\r')
 		{
 			camera(line, scene_arr[0], &issue);
 			ambient(line, scene_arr[1], &issue);

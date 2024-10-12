@@ -71,10 +71,12 @@ $(MLX):
 clean:
 	@make clean -s -C $(MLX_DIR)
 	@rm -rf $(OBJS)
+	@rm -rf $(BONUS_OBJS)
 	@echo "Cleaning Complete!"
 
 fclean: clean
 	@rm -rf $(NAME)
+	@rm -rf $(BONUS_NAME)
 	@echo "FCleaning Complete!"
 
 re: fclean all

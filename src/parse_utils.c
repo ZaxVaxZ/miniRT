@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:03:36 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/11 05:56:59 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/12 04:16:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ double	str_to_double(char **str, int *issue)
 	double	decimal;
 	int		sign;
 
+	if (!(**str) || **str == '\n' || **str == '\r')
+		*issue = 1;
 	result = 0.0;
 	decimal = 1;
 	sign = 1 - 2 * (**str == '-');
@@ -100,4 +102,11 @@ double	str_to_double(char **str, int *issue)
 	if (**str && **str != ' ' && **str != '\n' && **str != '\r' && **str != '#')
 		*issue = 1;
 	return (sign * result);
+}
+
+int	check_end_of_line(char *line)
+{
+	while (*line == ' ')
+		line++;
+	return (*line && *line != '#' && *line != '\n' && *line != '\r');
 }

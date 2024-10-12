@@ -41,6 +41,7 @@ double		magnitude(t_vector v);
 int			valid_hit(t_object *cy, t_ray ray, t_hit *hit, double ret);
 int			intersect_cap(t_object *pl, t_hit *hit, t_ray *ray);
 int			cy_cap_intersect(t_object *cy, t_ray *ray, t_hit *hit);
+int			save_result(t_object *obj, t_ray ray, t_hit *hit, double result);
 void		get_up_vector(t_camera *c);
 void		camera_look_at(t_camera *c);
 void		copy_vector(t_vector *v1, t_vector *v2);

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:58:39 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/10 20:06:05 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/12 04:17:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	parse_shape(char *line, int *i, double *scene_arr, int *issue)
 {
 	int	obj_type;
 
-	if (*issue)
-		return ;
 	while (*line == ' ')
 		line++;
 	if (ft_strncmp(line, "cy", 2) == 0)
@@ -58,39 +56,49 @@ void	parse_shape(char *line, int *i, double *scene_arr, int *issue)
 	if (obj_type != SPHERE && obj_type != PLANE)
 		*issue += parse_values(&line, scene_arr, 8, 1);
 	*issue += parse_values(&line, scene_arr, 9, 3);
+	*issue += check_end_of_line(line);
 }
 
 void	camera(char *line, double *scene_arr, int *issue)
 {
 	if (ft_strncmp(line, "C", 1) != 0)
 		return ;
+	while (*line == ' ')
+		line++;
 	*issue = 0;
 	scene_arr[0] = CAMERA;
 	line += 1;
 	*issue += parse_values(&line, scene_arr, 1, 3);
 	*issue += parse_values(&line, scene_arr, 4, 3);
 	*issue += parse_values(&line, scene_arr, 7, 1);
+	*issue += check_end_of_line(line);
 }
 
 void	ambient(char *line, double *scene_arr, int *issue)
 {
 	if (ft_strncmp(line, "A", 1) != 0)
 		return ;
+	while (*line == ' ')
+		line++;
 	*issue = 0;
 	scene_arr[0] = AMBIENT;
 	line += 1;
 	*issue += parse_values(&line, scene_arr, 7, 1);
 	*issue += parse_values(&line, scene_arr, 9, 3);
+	*issue += check_end_of_line(line);
 }
 
 void	light(char *line, double *scene_arr, int *issue)
 {
 	if (ft_strncmp(line, "L", 1) != 0)
 		return ;
+	while (*line == ' ')
+		line++;
 	*issue = 0;
 	scene_arr[0] = LIGHT;
 	line += 1;
 	*issue += parse_values(&line, scene_arr, 1, 3);
 	*issue += parse_values(&line, scene_arr, 7, 1);
 	*issue += parse_values(&line, scene_arr, 9, 3);
+	*issue += check_end_of_line(line);
 }
