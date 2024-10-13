@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:28:33 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/12 07:14:19 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/13 16:53:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static int	hit_objects(t_main *m, t_ray *ray, int i, int j)
 	t_hit	hit;
 
 	hit.closest = -1;
-	hit.cam = &m->scene.camera;
 	u = -1;
 	while (++u < m->scene.sp_cnt)
 		hit_sphere(*ray, &m->scene.spheres[u], &hit);

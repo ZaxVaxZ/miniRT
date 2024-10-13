@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/09 15:11:15 by ehammoud         ###   ########.fr       */
+/*   Updated: 2024/10/13 17:54:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static int	shadows(t_main *m, t_hit *h, t_ray ray, t_object *obj)
 	t_vector	diff1;
 	t_vector	diff2;
 	t_hit		hit;
+	int			ret;
 
 	if (obj == h->obj)
 		return (0);
@@ -76,11 +77,15 @@ static int	shadows(t_main *m, t_hit *h, t_ray ray, t_object *obj)
 	if (dot(diff1, diff2) < 0)
 		return (0);
 	if (obj->object_type == SPHERE)
-		return (hit_sphere(ray, obj, &hit));
+		ret = hit_sphere(ray, obj, &hit);
 	else if (obj->object_type == PLANE)
-		return (hit_plane(ray, obj, &hit));
+		ret = hit_plane(ray, obj, &hit);
 	else
-		return (hit_cylinder(ray, obj, &hit));
+		ret = hit_cylinder(ray, obj, &hit);
+	vector_op(&diff2, &hit.hitp, '-', &ray.origin);
+	if (dot(diff1, diff1) < dot(diff2, diff2))
+		return (0);
+	return (ret);
 }
 
 int	interrupted(t_main *m, t_hit *h)

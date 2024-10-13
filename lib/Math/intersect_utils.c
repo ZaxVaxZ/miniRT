@@ -44,14 +44,15 @@ int	intersect_cap(t_object *pl, t_hit *hit, t_ray *ray)
 	scalar_op(&hitp, &ray->orient, '*', result);
 	vector_op(&hitp, &hitp, '+', &ray->origin);
 	vector_op(&diff, &hitp, '-', &pl->origin);
-	if (dot(diff, diff) >= pl->radius * pl->radius)
-		return (0);
-	if (hit->closest > -1 && hit->closest <= result)
+	if ((dot(diff, diff) >= pl->radius * pl->radius)
+		|| (hit->closest > -1 && hit->closest <= result))
 		return (0);
 	hit->closest = result;
 	copy_vector(&hit->hitp, &hitp);
 	copy_vector(&hit->color, &pl->color);
 	copy_vector(&hit->normal, &pl->orient);
+	if (dot(hit->normal, ray->orient) > 0)
+		scalar_op(&hit->normal, &hit->normal, '*', -1);
 	return (1);
 }
 
@@ -83,7 +84,6 @@ int	save_result(t_object *obj, t_ray ray, t_hit *hit, double result)
 
 	vector_op(&c_q, &obj->origin, '-', &ray.origin);
 	cross_vector(&c_q, c_q, obj->orient);
-	// printf("%lf, %lf, %lf\n", c_q.x, c_q.y, c_q.z);
 	hit->closest = result;
 	scalar_op(&hit->hitp, &ray.orient, '*', result);
 	vector_op(&hit->hitp, &hit->hitp, '+', &ray.origin);
@@ -95,8 +95,8 @@ int	save_result(t_object *obj, t_ray ray, t_hit *hit, double result)
 	else if (obj->object_type == PLANE)
 		copy_vector(&hit->normal, &obj->orient);
 	normalize(&hit->normal);
-	// if (dot(hit->normal, ray.orient) > 0)
-	// 	scalar_op(&hit->normal, &hit->normal, '*', -1);
+	if (dot(hit->normal, ray.orient) > 0)
+		scalar_op(&hit->normal, &hit->normal, '*', -1);
 	hit->obj = obj;
 	return (1);
 }

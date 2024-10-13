@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:34:14 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/12 00:57:51 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/13 16:53:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct s_hit
 	t_vector	normal;
 	t_point		hitp;
 	t_object	*obj;
-	t_camera	*cam;
 }	t_hit;
 
 typedef struct s_scene
