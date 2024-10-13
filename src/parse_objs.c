@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:58:39 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/12 04:17:40 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/13 22:34:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,15 @@ int	parse_values(char **line, double *arr, int start, int count)
 	{
 		while (**line == ' ')
 			(*line)++;
-		arr[i] = str_to_double(line, &issue);
+		arr[i] = str_to_double(line, &issue, i < start + count - 1);
+		if (i < start + count - 1 && **line == ',')
+		{
+			(*line)++;
+			if ((**line < '0' || **line > '9') && **line != '+' && **line != '-')
+				issue = 1;
+		}
+		else if (i < start + count - 1)
+			issue = 1;
 		if (issue)
 			break ;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/13 17:54:48 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/13 18:48:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	shadows(t_main *m, t_hit *h, t_ray ray, t_object *obj)
 	hit.closest = -1;
 	vector_op(&diff1, &m->scene.light.origin, '-', &ray.origin);
 	vector_op(&diff2, &m->scene.light.origin, '-', &obj->origin);
-	if (dot(diff1, diff2) < 0)
+	if (dot(diff1, diff2) <= 0)
 		return (0);
 	if (obj->object_type == SPHERE)
 		ret = hit_sphere(ray, obj, &hit);
@@ -83,7 +83,7 @@ static int	shadows(t_main *m, t_hit *h, t_ray ray, t_object *obj)
 	else
 		ret = hit_cylinder(ray, obj, &hit);
 	vector_op(&diff2, &hit.hitp, '-', &ray.origin);
-	if (dot(diff1, diff1) < dot(diff2, diff2))
+	if (dot(diff1, diff1) <= dot(diff2, diff2) + 1e-6)
 		return (0);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:03:36 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/12 16:35:34 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/13 22:35:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ double	**allocate_scene_array(int object_count)
 	return (scene_arr);
 }
 
-double	str_to_double(char **str, int *issue)
+double	str_to_double(char **str, int *issue, int more)
 {
 	double	result;
 	double	decimal;
@@ -87,7 +87,7 @@ double	str_to_double(char **str, int *issue)
 	result = 0.0;
 	decimal = 1;
 	sign = 1 - 2 * (**str == '-');
-	*str += (**str == '-');
+	*str += (**str == '-' || **str == '+');
 	while (**str >= '0' && **str <= '9')
 		result = result * 10.0 + (*((*str)++) - '0');
 	if (**str == '.')
@@ -99,7 +99,8 @@ double	str_to_double(char **str, int *issue)
 			result += (*((*str)++) - '0') * decimal;
 		}
 	}
-	if (**str && **str != ' ' && **str != '\n' && **str != '\r' && **str != '#')
+	if ((more && **str != ',') || (!more && **str
+			&& **str != ' ' && **str != '\n' && **str != '\r' && **str != '#'))
 		*issue = 1;
 	return (sign * result);
 }

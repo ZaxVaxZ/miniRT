@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 11:25:17 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/12 04:18:04 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/13 19:22:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define DUPLICATE 6
 # define SUM 7
 
-double	str_to_double(char **str, int *issue);
+double	str_to_double(char **str, int *issue, int more);
 double	**allocate_scene_array(int object_count);
 double	**open_file(char *file);
 int		check_values(double *arr, int count, double low, double high);

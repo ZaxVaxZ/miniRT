@@ -26,6 +26,9 @@ void	read_camera_values(t_main *m, t_camera *c, double *vals)
 	c->fov = vals[i++];
 	if (create_matrix(&c->trans_matrix, 4, 4))
 		free_and_exit(m, ERR_MEM, EXIT_FAILURE);
+	if (is_equal(c->orient.x, 0) && is_equal(c->orient.y, 0)
+		&& is_equal(c->orient.z, 0))
+		free_and_exit(m, "Zero orientation vector for camera", EXIT_FAILURE);
 	c->trans_matrix.array[3][3] = 1;
 	scalar_op(&c->origin, &c->origin, '*', -1);
 	scalar_op(&c->orient, &c->orient, '*', -1);
@@ -64,6 +67,9 @@ void	read_shape_values(t_main *m, t_object *o, double *vals)
 	o->orient.x = vals[i++];
 	o->orient.y = vals[i++];
 	o->orient.z = vals[i++];
+	if (o->object_type != SPHERE && is_equal(o->orient.x, 0)
+		&& is_equal(o->orient.y, 0) && is_equal(o->orient.z, 0))
+		free_and_exit(m, "Zero orientation vector for object", EXIT_FAILURE);
 	o->radius = vals[i++] / 2.0;
 	o->height = vals[i++];
 	o->color.x = vals[i++];
