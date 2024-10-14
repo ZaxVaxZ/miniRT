@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:31:51 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/12 03:42:16 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/14 14:24:40 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_main_struct(t_main *m)
 	free_double_array(m->objs);
 	m->objs = NULL;
 	if (m->scene.camera.fov < 0 || m->scene.camera.fov > 180)
-		free_and_exit(m, "Error\nInvalid FOV value!\n", EXIT_FAILURE);
+		free_and_exit(m, "Invalid FOV value!\n", EXIT_FAILURE);
 }
 
 int	main(int ac, char **av)
@@ -45,7 +45,7 @@ int	main(int ac, char **av)
 	m.mlx = mlx_init();
 	if (!m.mlx)
 		free_and_exit(&m, FAILURE, EXIT_FAILURE);
-	m.mw = mlx_new_window(m.mlx, m.win_width, m.win_height, "miniFarty");
+	m.mw = mlx_new_window(m.mlx, m.win_width, m.win_height, "miniArty");
 	m.img = mlx_new_image(m.mlx, m.win_width, m.win_height);
 	if (!m.img)
 		free_and_exit(&m, FAILURE, EXIT_FAILURE);

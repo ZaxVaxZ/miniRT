@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:03:36 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/13 22:35:07 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/14 13:09:38 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	valid_values(double **arr)
 		issues += check_values(arr[2] + 9, 3, 0, 255);
 		i++;
 	}
-	issues = 0;
 	return (issues);
 }
 
@@ -90,7 +89,7 @@ double	str_to_double(char **str, int *issue, int more)
 	*str += (**str == '-' || **str == '+');
 	while (**str >= '0' && **str <= '9')
 		result = result * 10.0 + (*((*str)++) - '0');
-	if (**str == '.')
+	if (**str == '.' && *(*str - 1) >= '0' && *(*str - 1) <= '9')
 	{
 		(*str)++;
 		while (**str >= '0' && **str <= '9')

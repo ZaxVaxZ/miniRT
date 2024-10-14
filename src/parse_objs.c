@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:58:39 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/13 22:34:46 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/14 14:12:34 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	parse_values(char **line, double *arr, int start, int count)
 		if (i < start + count - 1 && **line == ',')
 		{
 			(*line)++;
-			if ((**line < '0' || **line > '9') && **line != '+' && **line != '-')
+			if ((**line < '0' || **line > '9')
+				&& **line != '+' && **line != '-')
 				issue = 1;
 		}
 		else if (i < start + count - 1)

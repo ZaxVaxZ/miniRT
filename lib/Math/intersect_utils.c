@@ -82,14 +82,16 @@ int	save_result(t_object *obj, t_ray ray, t_hit *hit, double result)
 {
 	t_vector	c_q;
 
-	vector_op(&c_q, &obj->origin, '-', &ray.origin);
-	cross_vector(&c_q, c_q, obj->orient);
 	hit->closest = result;
 	scalar_op(&hit->hitp, &ray.orient, '*', result);
 	vector_op(&hit->hitp, &hit->hitp, '+', &ray.origin);
+	vector_op(&c_q, &hit->hitp, '-', &obj->origin);
 	copy_vector(&hit->color, &obj->color);
 	if (obj->object_type == CYLINDER)
+	{
 		cross_vector(&hit->normal, c_q, obj->orient);
+		cross_vector(&hit->normal, hit->normal, obj->orient);
+	}
 	else if (obj->object_type == SPHERE)
 		vector_op(&hit->normal, &hit->hitp, '-', &obj->origin);
 	else if (obj->object_type == PLANE)

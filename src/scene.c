@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 21:21:30 by ehammoud          #+#    #+#             */
-/*   Updated: 2024/10/13 18:48:09 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/14 12:58:05 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	init_scene(t_main *m, t_scene *s, double **objs)
 void	setup_scene(t_main *m, t_scene *s)
 {
 	s->camera.focal_len = 1;
+	if (s->camera.fov >= 179)
+		s->camera.fov = 179;
 	m->vp_width = 2.0 * tan((s->camera.fov * PI) / 360) / s->camera.focal_len;
 	m->vp_height = m->vp_width / m->aspect_ratio;
 	s->camera.vp_u = m->vp_width / m->win_width;
@@ -72,16 +74,13 @@ static int	shadows(t_main *m, t_hit *h, t_ray ray, t_object *obj)
 	if (obj == h->obj)
 		return (0);
 	hit.closest = -1;
-	vector_op(&diff1, &m->scene.light.origin, '-', &ray.origin);
-	vector_op(&diff2, &m->scene.light.origin, '-', &obj->origin);
-	if (dot(diff1, diff2) <= 0)
-		return (0);
 	if (obj->object_type == SPHERE)
 		ret = hit_sphere(ray, obj, &hit);
 	else if (obj->object_type == PLANE)
 		ret = hit_plane(ray, obj, &hit);
 	else
 		ret = hit_cylinder(ray, obj, &hit);
+	vector_op(&diff1, &m->scene.light.origin, '-', &ray.origin);
 	vector_op(&diff2, &hit.hitp, '-', &ray.origin);
 	if (dot(diff1, diff1) <= dot(diff2, diff2) + 1e-6)
 		return (0);

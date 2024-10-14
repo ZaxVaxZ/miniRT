@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ehammoud <ehammoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:52:03 by ffidha            #+#    #+#             */
-/*   Updated: 2024/10/12 04:10:00 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/14 12:40:28 by ehammoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	check_line(char *line, int vals[8])
 		vals[DUPLICATE] = 1;
 	if (vals[CAMERA] > 1 || vals[AMBIENT] > 1 || vals[LIGHT] > 1)
 		vals[DUPLICATE] = 1;
+	if (ft_strncmp(line, "#", 1) == 0)
+		vals[DUPLICATE] = 0;
 }
 
 static int	count_objects(int fd)
@@ -50,7 +52,7 @@ static int	count_objects(int fd)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	if (vals[DUPLICATE])
+	if (vals[DUPLICATE] || !vals[CAMERA] || !vals[LIGHT] || !vals[AMBIENT])
 		free_and_exit(NULL, "Invalid file formatting", EXIT_FAILURE);
 	i = -1;
 	while (++i < 6)
